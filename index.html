@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прототипирование в Figma и UX/UI дизайн | Пиксель-Элегант курс | GammaIntelligence</title>
+    <meta name="description" content="Интенсивный курс UX/UI дизайна и прототипирования в Figma. От исследований до готового продукта за 3 месяца. Создайте портфолио и начните карьеру в IT! 252 академических часа обучения.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Пастельная палитра для UX/UI курса */
+            --pastel-purple: #E6E6FA;
+            --pastel-pink: #FFE4E1;
+            --pastel-blue: #E0F6FF;
+            --pastel-mint: #F0FFF0;
+            --pastel-peach: #FFEBCD;
+            --pastel-lavender: #F5F0FF;
+            --pastel-coral: #FFEEE6;
+            --pastel-sage: #F0F4EC;
+            
+            /* Акцентные цвета для дизайна */
+            --accent-figma: #FF6B35;
+            --accent-purple: #8B5CF6;
+            --accent-mint: #10B981;
+            --accent-gold: #F59E0B;
+            --accent-rose: #FF6B9D;
+            --accent-teal: #14B8A6;
+            
+            /* Пиксельные цвета */
+            --pixel-green: #00FF41;
+            --pixel-cyan: #00FFFF;
+            --pixel-yellow: #FFFF00;
+            --pixel-magenta: #FF00FF;
+            
+            /* Нейтральные */
+            --text-primary: #2D1B69;
+            --text-secondary: #64748B;
+            --white: #FFFFFF;
+            
+            /* Градиенты */
+            --gradient-hero: linear-gradient(135deg, var(--pastel-lavender) 0%, var(--pastel-blue) 30%, var(--pastel-mint) 60%, var(--pastel-peach) 100%);
+            --gradient-figma: linear-gradient(135deg, var(--accent-figma), var(--accent-rose));
+            --gradient-ux: linear-gradient(135deg, var(--accent-purple), var(--accent-teal));
+            --gradient-warm: linear-gradient(135deg, var(--pastel-peach) 0%, var(--pastel-coral) 100%);
+            --gradient-cool: linear-gradient(135deg, var(--pastel-purple) 0%, var(--pastel-blue) 100%);
+            --gradient-sage: linear-gradient(135deg, var(--pastel-sage) 0%, var(--pastel-mint) 100%);
+            --gradient-pixel: linear-gradient(90deg, var(--pixel-cyan), var(--pixel-magenta), var(--pixel-yellow));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            background: var(--gradient-hero);
+        }
+
+        /* Пиксельная сетка фон */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(0,0,0,0.05) 1px, transparent 0);
+            background-size: 20px 20px;
+            z-index: -2;
+            opacity: 0.3;
+        }
+
+        /* Декоративные blob формы + пиксельные элементы */
+        .blob {
+            position: absolute;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            opacity: 0.08;
+            animation: float-ux 25s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .blob-1 {
+            width: 500px;
+            height: 350px;
+            background: var(--accent-figma);
+            top: 5%;
+            right: -150px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 400px;
+            height: 500px;
+            background: var(--accent-purple);
+            bottom: 15%;
+            left: -100px;
+            animation-delay: 8s;
+        }
+
+        .blob-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--accent-mint);
+            top: 50%;
+            right: 5%;
+            animation-delay: 16s;
+        }
+
+        /* Пиксельные декоративные элементы */
+        .pixel-decoration {
+            position: absolute;
+            background: var(--pixel-green);
+            opacity: 0.6;
+            animation: pixel-blink 2s ease-in-out infinite;
+        }
+
+        .pixel-decoration-1 {
+            width: 8px;
+            height: 8px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .pixel-decoration-2 {
+            width: 12px;
+            height: 12px;
+            top: 60%;
+            right: 15%;
+            background: var(--pixel-cyan);
+            animation-delay: 1s;
+        }
+
+        .pixel-decoration-3 {
+            width: 6px;
+            height: 6px;
+            bottom: 30%;
+            left: 20%;
+            background: var(--pixel-magenta);
+            animation-delay: 0.5s;
+        }
+
+        @keyframes pixel-blink {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes float-ux {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            25% { 
+                transform: translateY(-40px) rotate(90deg) scale(1.1); 
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg) scale(0.9); 
+                border-radius: 70% 30% 40% 60% / 40% 70% 60% 30%;
+            }
+            75% { 
+                transform: translateY(30px) rotate(270deg) scale(1.05); 
+                border-radius: 40% 70% 60% 30% / 70% 40% 50% 60%;
+            }
+        }
+
+        /* Header с пиксельными элементами */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 1000;
+            padding: 1.5rem 0;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, var(--pixel-cyan), var(--pixel-magenta)) 1;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Компонент рейтинга в пиксельном стиле */
+        .rating-component {
+            display: flex;
+            align-items: center;
+            background: var(--gradient-pixel);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            position: relative;
+            animation: rating-glow 4s ease-in-out infinite;
+            box-shadow: 
+                0 0 15px rgba(0, 255, 255, 0.3),
+                4px 4px 0px rgba(0,0,0,0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .rating-star {
+            color: var(--pixel-yellow);
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+            animation: star-twinkle 2s ease-in-out infinite;
+        }
+
+        .rating-score {
+            margin-right: 0.8rem;
+            font-weight: bold;
+        }
+
+        .rating-count {
+            opacity: 0.9;
+            font-size: 0.55rem;
+        }
+
+        @keyframes rating-glow {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 15px rgba(0, 255, 255, 0.3),
+                    4px 4px 0px rgba(0,0,0,0.2);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 25px rgba(255, 0, 255, 0.5),
+                    4px 4px 0px rgba(0,0,0,0.3);
+            }
+        }
+
+        @keyframes star-twinkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* Responsive для рейтинга */
+        @media (max-width: 768px) {
+            .rating-component {
+                font-size: 0.55rem;
+                padding: 0.6rem 1rem;
+            }
+            
+            .rating-star {
+                font-size: 0.7rem;
+                margin-right: 0.3rem;
+            }
+            
+            .rating-count {
+                font-size: 0.45rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rating-component {
+                display: none; /* Скрываем на очень маленьких экранах */
+            }
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.2rem;
+            background: var(--gradient-pixel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pixel-glow 3s ease-in-out infinite;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        @keyframes pixel-glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3) hue-rotate(10deg); }
+        }
+
+        .cta-button {
+            background: var(--gradient-figma);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0; /* Убираем скругление для пиксельности */
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            font-weight: normal;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            box-shadow: 
+                4px 4px 0px var(--accent-rose),
+                8px 8px 0px rgba(0,0,0,0.1);
+        }
+
+        .cta-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                6px 6px 0px var(--accent-rose),
+                10px 10px 0px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 
+                2px 2px 0px var(--accent-rose),
+                4px 4px 0px rgba(0,0,0,0.1);
+        }
+
+        /* Hero Section с пиксельными элементами */
+        .hero {
+            min-height: 100vh;
+            padding: 10rem 2rem 6rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-purple), var(--accent-figma));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transform: rotate(-1deg);
+            position: relative;
+        }
+
+        /* Пиксельные акценты на заголовке */
+        .hero h1::before {
+            content: '█ ';
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.3em;
+            color: var(--pixel-green);
+            animation: pixel-blink 1.5s ease-in-out infinite;
+        }
+
+        .hero h1::after {
+            content: ' █';
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.3em;
+            color: var(--pixel-cyan);
+            animation: pixel-blink 1.5s ease-in-out infinite reverse;
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            transform: rotate(0.5deg);
+            position: relative;
+        }
+
+        /* Пиксельная строка состояния */
+        .pixel-status-bar {
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--pixel-green);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            padding: 0.8rem 1.5rem;
+            margin: 2rem auto;
+            max-width: 500px;
+            position: relative;
+            border: 2px solid var(--pixel-green);
+        }
+
+        .pixel-status-bar::before {
+            content: '> ';
+            color: var(--pixel-cyan);
+            animation: pixel-blink 1s ease-in-out infinite;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        /* Новые стили для информации о курсе */
+        .course-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2.5rem;
+            border-radius: 30px;
+            text-align: center;
+            border: 3px solid var(--accent-figma);
+            transform: rotate(calc(var(--rotation) * 1deg));
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .info-card:nth-child(1) { --rotation: 1; }
+        .info-card:nth-child(2) { --rotation: -1; }
+        .info-card:nth-child(3) { --rotation: 2; }
+
+        .info-card:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .info-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: var(--pastel-mint);
+            border-radius: 15px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.5rem;
+            line-height: 1.4;
+        }
+
+        /* Пиксельные иконки для новых карточек */
+        .pixel-icon.duration::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background: 
+                repeating-linear-gradient(0deg, var(--accent-gold) 0px, var(--accent-gold) 4px, transparent 4px, transparent 8px),
+                repeating-linear-gradient(90deg, var(--accent-teal) 0px, var(--accent-teal) 4px, transparent 4px, transparent 8px);
+        }
+
+        .pixel-icon.schedule::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            background: 
+                radial-gradient(circle at 6px 6px, var(--pixel-green) 3px, transparent 3px),
+                radial-gradient(circle at 14px 14px, var(--pixel-cyan) 3px, transparent 3px),
+                radial-gradient(circle at 22px 22px, var(--pixel-magenta) 3px, transparent 3px);
+        }
+
+        .pixel-icon.price::before {
+            content: '€';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+        }
+
+        /* Стили для целей курса */
+        .course-goals {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 40px;
+            margin: 4rem 0;
+            border: 3px solid var(--pixel-cyan);
+            transform: rotate(-0.5deg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .goal-content {
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        .goal-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-highlight {
+            background: var(--gradient-pixel);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            line-height: 1.6;
+            text-align: center;
+            animation: highlight-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes highlight-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.5); }
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2.5rem;
+            border-radius: 30px;
+            text-align: center;
+            border: 2px solid var(--pastel-purple);
+            transform: rotate(calc(var(--rotation) * 1deg));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:nth-child(1) { --rotation: 1; }
+        .feature-card:nth-child(2) { --rotation: -1; }
+        .feature-card:nth-child(3) { --rotation: 2; }
+
+        .feature-card:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        /* Пиксельные иконки вместо эмодзи */
+        .feature-card .pixel-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            background: var(--gradient-pixel);
+            position: relative;
+            image-rendering: pixelated;
+            animation: pixel-float 3s ease-in-out infinite;
+        }
+
+        .feature-card:nth-child(1) .pixel-icon {
+            animation-delay: 0s;
+        }
+
+        .feature-card:nth-child(2) .pixel-icon {
+            animation-delay: 1s;
+        }
+
+        .feature-card:nth-child(3) .pixel-icon {
+            animation-delay: 2s;
+        }
+
+        @keyframes pixel-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Пиксельная иконка Figma */
+        .pixel-icon.figma::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background: 
+                linear-gradient(var(--accent-figma) 0%, var(--accent-figma) 50%, transparent 50%),
+                linear-gradient(90deg, var(--accent-purple) 0%, var(--accent-purple) 50%, transparent 50%);
+            background-size: 8px 8px;
+        }
+
+        /* Пиксельная иконка мозга */
+        .pixel-icon.brain::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 28px;
+            height: 28px;
+            background: 
+                radial-gradient(circle at 8px 8px, var(--accent-purple) 4px, transparent 4px),
+                radial-gradient(circle at 20px 12px, var(--accent-teal) 3px, transparent 3px),
+                radial-gradient(circle at 12px 20px, var(--accent-mint) 3px, transparent 3px);
+        }
+
+        /* Пиксельная иконка портфолио */
+        .pixel-icon.portfolio::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 24px;
+            background: 
+                linear-gradient(var(--accent-gold) 0%, var(--accent-gold) 8px, transparent 8px, transparent 16px, var(--accent-gold) 16px),
+                linear-gradient(90deg, var(--accent-rose) 0%, var(--accent-rose) 8px, transparent 8px, transparent 16px, var(--accent-rose) 16px);
+            background-size: 32px 8px, 8px 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        /* Добавляем пиксельные акценты к заголовкам */
+        .feature-card h3::before {
+            content: '▲ ';
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.5rem;
+            color: var(--pixel-green);
+            margin-right: 0.5rem;
+        }
+
+        .pricing-block {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 40px;
+            margin: 4rem auto;
+            max-width: 600px;
+            text-align: center;
+            border: 3px solid var(--accent-figma);
+            transform: rotate(-1deg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Пиксельные углы для pricing блока */
+        .pricing-block::before {
+            content: '█';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1rem;
+            color: var(--pixel-cyan);
+            line-height: 1;
+        }
+
+        .pricing-block::after {
+            content: '█';
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1rem;
+            color: var(--pixel-magenta);
+            line-height: 1;
+        }
+
+        .price {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 2.5rem;
+            background: var(--gradient-pixel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+            animation: price-glitch 4s ease-in-out infinite;
+        }
+
+        @keyframes price-glitch {
+            0%, 90%, 100% { transform: translateX(0); }
+            92% { transform: translateX(-2px); }
+            94% { transform: translateX(2px); }
+            96% { transform: translateX(-1px); }
+            98% { transform: translateX(1px); }
+        }
+
+        .cta-form {
+            max-width: 500px;
+            margin: 3rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group input {
+            padding: 1.5rem;
+            border: 2px solid var(--pastel-purple);
+            border-radius: 0; /* Убираем скругление */
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--pixel-cyan);
+            box-shadow: 
+                0 0 0 2px var(--pixel-cyan),
+                inset 0 0 10px rgba(0, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .submit-button {
+            background: var(--gradient-figma);
+            color: white;
+            padding: 1.5rem;
+            border: none;
+            border-radius: 0; /* Убираем скругление */
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            font-weight: normal;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                4px 4px 0px var(--accent-rose),
+                8px 8px 0px rgba(0,0,0,0.1);
+        }
+
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--pixel-cyan), transparent);
+            transition: left 0.5s;
+            opacity: 0.3;
+        }
+
+        .submit-button:hover::before {
+            left: 100%;
+        }
+
+        .submit-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                6px 6px 0px var(--accent-rose),
+                10px 10px 0px rgba(0,0,0,0.2);
+        }
+
+        .submit-button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 
+                2px 2px 0px var(--accent-rose),
+                4px 4px 0px rgba(0,0,0,0.1);
+        }
+
+        .footer {
+            background: var(--text-primary);
+            color: var(--pastel-lavender);
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 60px 60px 0 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        /* Пиксельная граница для футера */
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: 
+                linear-gradient(90deg, 
+                    var(--pixel-green) 25%, 
+                    var(--pixel-cyan) 50%, 
+                    var(--pixel-magenta) 75%, 
+                    var(--pixel-yellow) 100%
+                );
+            animation: pixel-border-move 3s linear infinite;
+        }
+
+        @keyframes pixel-border-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 0; }
+        }
+
+        /* Стили для секции программы курса */
+        .program-section {
+            padding: 6rem 2rem;
+            background: var(--gradient-sage);
+            margin: 4rem 0;
+            border-radius: 60px;
+            position: relative;
+        }
+
+        .program-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .module-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid var(--accent-purple);
+            transition: all 0.3s ease;
+            transform: rotate(calc(var(--module-rotation) * 0.5deg));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card:nth-child(odd) { --module-rotation: 1; }
+        .module-card:nth-child(even) { --module-rotation: -1; }
+
+        .module-card:hover {
+            transform: rotate(0deg) translateY(-8px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            border-color: var(--pixel-cyan);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .module-number {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.2rem;
+            background: var(--gradient-pixel);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 10px;
+            min-width: 50px;
+            text-align: center;
+            animation: number-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes number-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.7); }
+        }
+
+        .module-card h3 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .module-hours {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            background: var(--accent-mint);
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 15px;
+            white-space: nowrap;
+        }
+
+        .module-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Результаты обучения */
+        .learning-results {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 3px solid var(--accent-mint);
+            transform: rotate(-0.5deg);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .result-item {
+            background: var(--pastel-mint);
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .result-item:hover {
+            background: var(--accent-mint);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Секция требований */
+        .requirements-section {
+            padding: 6rem 2rem;
+            background: var(--gradient-warm);
+            margin: 4rem 0;
+            border-radius: 60px;
+        }
+
+        .requirements-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .req-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 3px solid var(--accent-figma);
+            transform: rotate(calc(var(--req-rotation) * 1deg));
+            transition: all 0.3s ease;
+        }
+
+        .req-card:nth-child(1) { --req-rotation: 1; }
+        .req-card:nth-child(2) { --req-rotation: -1; }
+        .req-card:nth-child(3) { --req-rotation: 2; }
+
+        .req-card:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.2);
+        }
+
+        .req-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .req-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .req-card li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            border-bottom: 1px solid var(--pastel-purple);
+        }
+
+        .req-card li:last-child {
+            border-bottom: none;
+        }
+
+        .req-card li::before {
+            content: '▲';
+            position: absolute;
+            left: 0;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: var(--pixel-green);
+            animation: pixel-blink 2s ease-in-out infinite;
+        }
+
+        /* Стили для секции преподавателей */
+        .teachers-section {
+            padding: 6rem 2rem;
+            background: var(--gradient-cool);
+            margin: 4rem 0;
+            border-radius: 60px;
+        }
+
+        .teachers-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .teacher-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 3px solid var(--accent-rose);
+            transform: rotate(calc(var(--teacher-rotation) * 1deg));
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .teacher-card:nth-child(1) { --teacher-rotation: 1; }
+        .teacher-card:nth-child(2) { --teacher-rotation: -1; }
+
+        .teacher-card:hover {
+            transform: rotate(0deg) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(255, 107, 157, 0.2);
+        }
+
+        .teacher-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-pixel);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.2rem;
+            margin: 0 auto 1.5rem;
+            animation: avatar-glow 4s ease-in-out infinite;
+        }
+
+        @keyframes avatar-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.7); }
+        }
+
+        .teacher-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .teacher-role {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: var(--accent-purple);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .teacher-info {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .teacher-info li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--pastel-purple);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .teacher-info li:last-child {
+            border-bottom: none;
+        }
+
+        /* Стили для секции записи */
+        .enrollment-section {
+            padding: 6rem 2rem;
+            background: var(--gradient-hero);
+            margin: 4rem 0;
+            border-radius: 60px;
+        }
+
+        .enrollment-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .course-dates {
+            margin-bottom: 4rem;
+        }
+
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .date-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid var(--accent-teal);
+            text-align: center;
+            transition: all 0.3s ease;
+            transform: rotate(calc(var(--date-rotation) * 0.5deg));
+        }
+
+        .date-card:nth-child(1) { --date-rotation: 1; }
+        .date-card:nth-child(2) { --date-rotation: -1; }
+        .date-card:nth-child(3) { --date-rotation: 2; }
+
+        .date-card:hover {
+            transform: rotate(0deg) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(20, 184, 166, 0.2);
+        }
+
+        .date-period {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .date-schedule {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .pricing-info {
+            margin-bottom: 4rem;
+        }
+
+        .price-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 40px;
+            border: 3px solid var(--accent-gold);
+            text-align: center;
+            transform: rotate(-1deg);
+            position: relative;
+        }
+
+        .price-card::before {
+            content: '★';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 2rem;
+            color: var(--pixel-yellow);
+            animation: star-sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes star-sparkle {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+
+        .price {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 2.2rem;
+            background: var(--gradient-pixel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+            animation: price-glitch 4s ease-in-out infinite;
+        }
+
+        .price-note {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .course-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .detail-item {
+            background: var(--pastel-mint);
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .enrollment-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 3px solid var(--accent-figma);
+            transform: rotate(0.5deg);
+        }
+
+        .enrollment-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .enrollment-form input,
+        .enrollment-form select {
+            width: 100%;
+            padding: 1.5rem;
+            border: 2px solid var(--pastel-purple);
+            border-radius: 0;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .enrollment-form input:focus,
+        .enrollment-form select:focus {
+            outline: none;
+            border-color: var(--pixel-cyan);
+            box-shadow: 
+                0 0 0 2px var(--pixel-cyan),
+                inset 0 0 10px rgba(0, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .enrollment-form select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L2 4h8z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 8rem 1rem 4rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .blob {
+                display: none;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .cta-button {
+                font-size: 0.6rem;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .price {
+                font-size: 2rem;
+            }
+
+            .submit-button {
+                font-size: 0.7rem;
+            }
+
+            .pixel-decoration {
+                display: none;
+            }
+        }
+
+        /* Enhanced Hero Badge */
+        .hero-badge {
+            background: var(--gradient-pixel);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            margin-bottom: 2rem;
+            display: inline-block;
+            animation: badge-glow 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-pixel);
+            border-radius: 27px;
+            z-index: -1;
+            opacity: 0.5;
+            animation: badge-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badge-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.5); }
+        }
+
+        @keyframes badge-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* Enhanced highlight text */
+        .highlight-text {
+            background: var(--gradient-pixel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.9em;
+            animation: text-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes text-glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3) drop-shadow(0 0 5px rgba(0, 255, 255, 0.5)); }
+        }
+
+        /* Enhanced loading bar */
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: var(--gradient-pixel);
+            width: 0%;
+            animation: loading-fill 3s ease-out forwards;
+        }
+
+        @keyframes loading-fill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Enhanced CTA Section */
+        .hero-cta-section {
+            display: flex;
+            gap: 1.5rem;
+            margin: 3rem 0;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button-enhanced {
+            background: linear-gradient(135deg, var(--accent-figma), var(--accent-rose));
+            color: white;
+            padding: 1.5rem 2.5rem;
+            border: none;
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            box-shadow: 
+                6px 6px 0px var(--accent-purple),
+                12px 12px 0px rgba(0,0,0,0.1);
+            min-width: 280px;
+            justify-content: space-between;
+        }
+
+        .cta-button-enhanced:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 
+                9px 9px 0px var(--accent-purple),
+                15px 15px 0px rgba(0,0,0,0.2);
+        }
+
+        .button-price {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+        }
+
+        .cta-button-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-primary);
+            padding: 1.2rem 2rem;
+            border: 2px solid var(--accent-purple);
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .cta-button-secondary:hover {
+            background: var(--accent-purple);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Course Highlights */
+        .course-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .highlight-badge {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 2px solid var(--accent-mint);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .highlight-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+            border-color: var(--accent-teal);
+        }
+
+        .badge-icon {
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-sage);
+            border-radius: 50%;
+        }
+
+        .badge-content {
+            flex: 1;
+        }
+
+        .badge-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .badge-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Trust Indicators */
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 4rem 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .trust-number {
+            display: block;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 2rem;
+            background: var(--gradient-pixel);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: number-pulse 3s ease-in-out infinite;
+        }
+
+        .trust-text {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes number-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .hero-cta-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .cta-button-enhanced {
+                min-width: auto;
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .course-highlights {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .trust-indicators {
+                gap: 2rem;
+            }
+            
+            .trust-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Декоративные blob формы -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Пиксельные декоративные элементы -->
+    <div class="pixel-decoration pixel-decoration-1"></div>
+    <div class="pixel-decoration pixel-decoration-2"></div>
+    <div class="pixel-decoration pixel-decoration-3"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">GammaIntelligence</div>
+            
+            <!-- Компонент рейтинга -->
+            <div class="rating-component">
+                <span class="rating-star">★</span>
+                <span class="rating-score">4.9</span>
+                <span class="rating-count">(89 отзывов)</span>
+            </div>
+            
+            <a href="#enroll" class="cta-button">▲ Join Course</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Decorative elements -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="pixel-decoration pixel-decoration-1"></div>
+        <div class="pixel-decoration pixel-decoration-2"></div>
+        <div class="pixel-decoration pixel-decoration-3"></div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-text">✨ НОВЫЙ КУРС 2025</span>
+            </div>
+            
+            <h1>
+                UX/UI Дизайн &<br>
+                Прототипирование в Figma
+            </h1>
+            
+            <p class="subtitle">
+                Интенсивный курс для создания пользовательских интерфейсов. 
+                От исследований до готового продукта за 3 месяца. 
+                <span class="highlight-text">252 академических часа</span> качественного обучения.
+            </p>
+            
+            <!-- Pixel status bar with dynamic content -->
+            <div class="pixel-status-bar">
+                <span id="statusText">ЗАГРУЗКА КУРСА...</span>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+            
+            <!-- Enhanced CTA section -->
+            <div class="hero-cta-section">
+                <div class="cta-primary">
+                    <a href="#enrollment" class="cta-button-enhanced" onclick="scrollToEnrollment()">
+                        <span class="button-icon">▲</span>
+                        <span class="button-text">ЗАПИСАТЬСЯ НА КУРС</span>
+                        <span class="button-price">€2008.19</span>
+                    </a>
+                </div>
+                
+                <div class="cta-secondary">
+                    <a href="#course-info" class="cta-button-secondary" onclick="scrollToCourseInfo()">
+                        <span class="button-icon">▶</span>
+                        <span class="button-text">УЗНАТЬ ПОДРОБНЕЕ</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Course highlights badges -->
+            <div class="course-highlights">
+                <div class="highlight-badge">
+                    <div class="badge-icon">📅</div>
+                    <div class="badge-content">
+                        <div class="badge-title">СТАРТ КУРСА</div>
+                        <div class="badge-value">28 АПРЕЛЯ</div>
+                    </div>
+                </div>
+                
+                <div class="highlight-badge">
+                    <div class="badge-icon">👥</div>
+                    <div class="badge-content">
+                        <div class="badge-title">ГРУППЫ</div>
+                        <div class="badge-value">6-10 ЧЕЛОВЕК</div>
+                    </div>
+                </div>
+                
+                <div class="highlight-badge">
+                    <div class="badge-icon">🎯</div>
+                    <div class="badge-content">
+                        <div class="badge-title">ФОРМАТ</div>
+                        <div class="badge-value">ОЧНО + ПРАКТИКА</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trust indicators -->
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <span class="trust-number">252</span>
+                    <span class="trust-text">ЧАСА ОБУЧЕНИЯ</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">8</span>
+                    <span class="trust-text">МОДУЛЕЙ</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">100%</span>
+                    <span class="trust-text">ПРАКТИКИ</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Программа курса -->
+    <section class="program-section" id="course-info">
+        <div class="program-content">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-purple);">
+                ▲ ПРОГРАММА КУРСА
+            </h2>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">01</span>
+                        <h3>Введение в UX/UI дизайн</h3>
+                        <div class="module-hours">4 часа</div>
+                    </div>
+                    <p>Основные понятия UX и UI. Различие между ними и их роли в процессе разработки.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">02</span>
+                        <h3>Основы работы в Figma</h3>
+                        <div class="module-hours">12 часов</div>
+                    </div>
+                    <p>Рабочее пространство и инструменты. Простые формы. Векторные инструменты. Основы работы с изображениями. Маски. Иерархия в документе. Базовая работа с текстом.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">03</span>
+                        <h3>Прототип лендинга</h3>
+                        <div class="module-hours">16 часов</div>
+                    </div>
+                    <p>Основы дизайна на базе Figma. Композиция в дизайне. Типографика и читабельность. Теория цвета в UI дизайне, работа с палитрами. Сетки, интервалы и макет.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">04</span>
+                        <h3>HTML/CSS, основы верстки</h3>
+                        <div class="module-hours">22 часа</div>
+                    </div>
+                    <p>Стандарт HTML5. Основные теги. Отображение страницы в браузере. DOM model. Основные инструменты веб-разработчика. IDE (Visual Studio Code). CSS CSS3.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">05</span>
+                        <h3>UX исследования. Miro/FigJam</h3>
+                        <div class="module-hours">16 часов</div>
+                    </div>
+                    <p>Продуктовая гипотеза и исследования. Создание гипотезы. Исследование пользователя и конкурентные исследования. Карта эмпатии. Создание персон. Customer Journey Map.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">06</span>
+                        <h3>UX дизайн</h3>
+                        <div class="module-hours">16 часов</div>
+                    </div>
+                    <p>Wireframing. Пользовательские тесты. Анализ пользовательских тестов. Итерации сеток.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">07</span>
+                        <h3>Разработка прототипа сайта</h3>
+                        <div class="module-hours">32 часа</div>
+                    </div>
+                    <p>Продвинутые методы Figma. Auto Layout. Создание компонентов. Стили в Figma. Плагины Figma. Кликабельный прототип. Юзабилити-тестирование.</p>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-header">
+                        <span class="module-number">08</span>
+                        <h3>Подготовка для разработки</h3>
+                        <div class="module-hours">8 часов</div>
+                    </div>
+                    <p>Создание адаптивов. Разработка UI-kit. Подготовка прототипа для передачи в разработку.</p>
+                </div>
+            </div>
+
+            <!-- Результаты обучения -->
+            <div class="learning-results">
+                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 1rem; margin-bottom: 2rem; text-align: center; color: var(--accent-mint);">
+                    ▲ РЕЗУЛЬТАТ ОБУЧЕНИЯ
+                </h3>
+                <div class="results-grid">
+                    <div class="result-item">✓ Владеют умением проводить исследования пользователей</div>
+                    <div class="result-item">✓ Создают пользовательские сценарии в Miro</div>
+                    <div class="result-item">✓ Умеют создавать wireframes и прототипы</div>
+                    <div class="result-item">✓ Понимают принципы графического дизайна</div>
+                    <div class="result-item">✓ Создают дизайн интерфейса в Figma</div>
+                    <div class="result-item">✓ Создают статические веб-страницы с HTML5/CSS3</div>
+                    <div class="result-item">✓ Знают принципы адаптивного дизайна</div>
+                    <div class="result-item">✓ Умеют создавать интерфейсы для разных устройств</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Требования и информация -->
+    <section class="requirements-section">
+        <div class="requirements-content">
+            <div class="requirements-grid">
+                <div class="req-card">
+                    <h3>📋 Требования</h3>
+                    <ul>
+                        <li>Уверенный пользователь ПК</li>
+                        <li>Желательно наличие собственного ноутбука (Windows/Mac, ОЗУ 8GB, экран >13.3")</li>
+                        <li>При необходимости на время обучения выдается ноутбук</li>
+                    </ul>
+                </div>
+
+                <div class="req-card">
+                    <h3>🎯 Методы обучения</h3>
+                    <ul>
+                        <li>126 ак.ч. аудиторных занятий</li>
+                        <li>126 ак.ч. самостоятельной работы</li>
+                        <li>Практические занятия: 8 ак.ч.</li>
+                        <li>Семинары: 8 ак.ч.</li>
+                    </ul>
+                </div>
+
+                <div class="req-card">
+                    <h3>✅ Условия окончания</h3>
+                    <ul>
+                        <li>Результаты оцениваются на основе практических работ</li>
+                        <li>Для получения сертификата необходимо получить зачет 75% домашних работ</li>
+                        <li>При успешном выполнении работы получают оценку "зачет"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преподаватели -->
+    <section class="teachers-section">
+        <div class="teachers-content">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-rose);">
+                ▲ ПРЕПОДАВАТЕЛИ
+            </h2>
+            
+            <div class="teachers-grid">
+                <div class="teacher-card">
+                    <div class="teacher-avatar">ДГ</div>
+                    <h3>Дмитрий Горнаков</h3>
+                    <div class="teacher-role">UX/UI Designer & Mentor</div>
+                    <ul class="teacher-info">
+                        <li><strong>Опыт:</strong> свыше 7 лет в графическом дизайне</li>
+                        <li><strong>Специализация:</strong> графический дизайн, дизайн интерфейсов</li>
+                        <li><strong>Преподавание:</strong> свыше 10 лет опыта</li>
+                        <li><strong>Образование:</strong> Estonian Music Academy (2008)</li>
+                    </ul>
+                </div>
+
+                <div class="teacher-card">
+                    <div class="teacher-avatar">РК</div>
+                    <h3>Роман Кутселепа</h3>
+                    <div class="teacher-role">Frontend Developer & Educator</div>
+                    <ul class="teacher-info">
+                        <li><strong>Опыт:</strong> свыше 5 лет в разработке ПО</li>
+                        <li><strong>Специализация:</strong> веб-дизайн, JavaScript, эффективное использование ПО</li>
+                        <li><strong>Преподавание:</strong> свыше 5 лет в обучении персонала</li>
+                        <li><strong>Образование:</strong> Anglia Ruskin University (2010, Англия)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Даты и запись -->
+    <section class="enrollment-section" id="enrollment">
+        <div class="enrollment-content">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-gold);">
+                ▲ ЗАПИСЬ НА КУРС
+            </h2>
+
+            <div class="course-dates">
+                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 2rem; text-align: center; color: var(--accent-purple);">
+                    Время проведения курсов:
+                </h3>
+                <div class="dates-grid">
+                    <div class="date-card">
+                        <div class="date-period">28.04.2025 - 28.07.2025</div>
+                        <div class="date-schedule">Пн, Ср, Пт | 17:45 - 21:00</div>
+                    </div>
+                    <div class="date-card">
+                        <div class="date-period">07.05.2025 - 07.08.2025</div>
+                        <div class="date-schedule">Пн, Ср, Пт | 17:45 - 21:00</div>
+                    </div>
+                    <div class="date-card">
+                        <div class="date-period">26.05.2025 - 26.08.2025</div>
+                        <div class="date-schedule">Пн, Ср, Пт | 17:45 - 21:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-info">
+                <div class="price-card">
+                    <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;">СТОИМОСТЬ КУРСА</h3>
+                    <div class="price">€2008.19</div>
+                    <div class="price-note">+ НСО</div>
+                    <div class="course-details">
+                        <div class="detail-item">📍 <strong>Адрес:</strong> Tartu mnt. 18, Tallinn</div>
+                        <div class="detail-item">👥 <strong>Формат:</strong> Аудиторный, группы 6-10 человек</div>
+                        <div class="detail-item">🗣️ <strong>Язык:</strong> Русский</div>
+                        <div class="detail-item">💻 <strong>Техника:</strong> При необходимости выдается ноутбук</div>
+                    </div>
+                </div>
+            </div>
+
+            <form class="enrollment-form" id="enrollmentForm">
+                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.8rem; text-align: center; margin-bottom: 2rem; color: var(--accent-figma);">
+                    ОСТАВИТЬ ЗАЯВКУ НА КУРС
+                </h3>
+                
+                <div class="form-group">
+                    <input type="text" placeholder="ВАШЕ ИМЯ" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="EMAIL АДРЕС" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" placeholder="ТЕЛЕФОН" required>
+                </div>
+                <div class="form-group">
+                    <select required>
+                        <option value="">ВЫБЕРИТЕ ПОТОК</option>
+                        <option value="28.04.2025">28.04.2025 - 28.07.2025</option>
+                        <option value="07.05.2025">07.05.2025 - 07.08.2025</option>
+                        <option value="26.05.2025">26.05.2025 - 26.08.2025</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-button">
+                    ▲ ОТПРАВИТЬ ЗАЯВКУ
+                </button>
+                
+                <p style="margin-top: 1.5rem; font-family: 'Press Start 2P', monospace; font-size: 0.6rem; opacity: 0.8; text-align: center;">
+                    ♦ КАЧЕСТВЕННОЕ ОБУЧЕНИЕ ГАРАНТИРОВАНО
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div style="margin-bottom: 2rem;">
+            <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; color: var(--pixel-cyan);">
+                GAMMA INTELLIGENCE TRAINING CENTRE
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h4 style="font-size: 0.8rem; margin-bottom: 1rem; color: var(--pixel-green);">КОНТАКТЫ:</h4>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">📍 Tartu mnt. 18, Tallinn, Estonia</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">📞 +372 555 81 521</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">✉️ info@gammatest.net</p>
+                </div>
+                
+                <div>
+                    <h4 style="font-size: 0.8rem; margin-bottom: 1rem; color: var(--pixel-magenta);">ДОКУМЕНТЫ:</h4>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">GAMMA INTELLIGENCE OÜ</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">Рег. номер: 11122396</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">Группа программы: 0613 - Анализ и разработка ПО</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="border-top: 2px solid var(--pixel-cyan); padding-top: 2rem; text-align: center;">
+            <p>&copy; 2013-2025 Gamma Intelligence | Для тех, кто создает прекрасное.</p>
+            <p style="margin-top: 1rem; opacity: 0.8;">
+                Вопросы по курсу? Пишите: <a href="mailto:info@gammatest.net" style="color: var(--pixel-yellow); text-decoration: none; font-family: 'Press Start 2P', monospace; font-size: 0.7rem;">info@gammatest.net</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced pixel status animation with course loading simulation
+        function animateStatusText() {
+            const statusText = document.getElementById('statusText');
+            const statuses = [
+                'ЗАГРУЗКА КУРСА...',
+                'ПРОВЕРКА МОДУЛЕЙ...',
+                'ИНИЦИАЛИЗАЦИЯ FIGMA...',
+                'ПОДГОТОВКА UX/UI...',
+                'КУРС ГОТОВ К ЗАПУСКУ!',
+                'ЗАПИСЫВАЙТЕСЬ СЕЙЧАС!'
+            ];
+            
+            let currentIndex = 0;
+            
+            const interval = setInterval(() => {
+                statusText.textContent = statuses[currentIndex];
+                currentIndex++;
+                
+                if (currentIndex >= statuses.length) {
+                    clearInterval(interval);
+                    // Final status with special styling
+                    setTimeout(() => {
+                        statusText.innerHTML = '✓ СИСТЕМА ГОТОВА К ОБУЧЕНИЮ';
+                        statusText.style.color = 'var(--pixel-green)';
+                    }, 500);
+                }
+            }, 500);
+        }
+
+        // Smooth scroll functions for enhanced CTA buttons
+        function scrollToEnrollment() {
+            const enrollmentSection = document.querySelector('#enrollment') || document.querySelector('.enrollment-section');
+            if (enrollmentSection) {
+                enrollmentSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Add pixel glitch effect to the enrollment form
+                setTimeout(() => {
+                    const form = enrollmentSection.querySelector('.enrollment-form');
+                    if (form) {
+                        form.style.animation = 'pixel-glitch 0.5s ease-out';
+                        setTimeout(() => {
+                            form.style.animation = '';
+                        }, 500);
+                    }
+                }, 800);
+            }
+        }
+
+        function scrollToCourseInfo() {
+            const courseInfoSection = document.querySelector('#course-info') || document.querySelector('.course-goals');
+            if (courseInfoSection) {
+                courseInfoSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Enhanced trust indicators animation
+        function animateTrustNumbers() {
+            const trustNumbers = document.querySelectorAll('.trust-number');
+            const targetValues = [252, 8, 100];
+            
+            trustNumbers.forEach((number, index) => {
+                const targetValue = targetValues[index];
+                let currentValue = 0;
+                const increment = targetValue / 50;
+                
+                const counter = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= targetValue) {
+                        currentValue = targetValue;
+                        clearInterval(counter);
+                    }
+                    
+                    if (index === 2) {
+                        number.textContent = Math.floor(currentValue) + '%';
+                    } else {
+                        number.textContent = Math.floor(currentValue);
+                    }
+                }, 40);
+            });
+        }
+
+        // Enhanced course highlights hover effects
+        function initCourseHighlights() {
+            const highlights = document.querySelectorAll('.highlight-badge');
+            
+            highlights.forEach(badge => {
+                badge.addEventListener('mouseenter', () => {
+                    const icon = badge.querySelector('.badge-icon');
+                    icon.style.transform = 'scale(1.2) rotate(10deg)';
+                    icon.style.transition = 'all 0.3s ease';
+                });
+                
+                badge.addEventListener('mouseleave', () => {
+                    const icon = badge.querySelector('.badge-icon');
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                });
+            });
+        }
+
+        // Enhanced loading and initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start status animation
+            setTimeout(animateStatusText, 1000);
+            
+            // Start trust numbers animation when they're in view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateTrustNumbers();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            const trustSection = document.querySelector('.trust-indicators');
+            if (trustSection) {
+                observer.observe(trustSection);
+            }
+            
+            // Initialize course highlights
+            initCourseHighlights();
+            
+            // Original functions
+            animateRating();
+        });
+
+        // Add pixel glitch keyframe if not exists
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pixel-glitch {
+                0% { transform: translateX(0); }
+                10% { transform: translateX(-2px) scale(1.01); }
+                20% { transform: translateX(2px) scale(0.99); }
+                30% { transform: translateX(-1px) scale(1.01); }
+                40% { transform: translateX(1px) scale(0.99); }
+                50% { transform: translateX(-2px) scale(1.01); }
+                60% { transform: translateX(2px) scale(0.99); }
+                70% { transform: translateX(-1px) scale(1.01); }
+                80% { transform: translateX(1px) scale(0.99); }
+                90% { transform: translateX(0) scale(1); }
+                100% { transform: translateX(0) scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Пиксельная анимация формы
+        document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const button = this.querySelector('.submit-button');
+            const originalText = button.textContent;
+            
+            // Пиксельная анимация загрузки
+            button.textContent = '▲ ОТПРАВЛЯЕМ...';
+            button.disabled = true;
+            
+            let dots = '';
+            const loadingInterval = setInterval(() => {
+                dots += '█';
+                if (dots.length > 3) dots = '';
+                button.textContent = `▲ ОТПРАВЛЯЕМ${dots}`;
+            }, 300);
+            
+            setTimeout(() => {
+                clearInterval(loadingInterval);
+                button.textContent = '✓ ЗАЯВКА ОТПРАВЛЕНА!';
+                button.style.background = 'var(--gradient-sage)';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.background = 'var(--gradient-figma)';
+                    this.reset();
+                }, 3000);
+            }, 2000);
+        });
+
+        // Анимация рейтинга с изменением количества отзывов
+        function animateRating() {
+            const ratingCount = document.querySelector('.rating-count');
+            const ratingComponent = document.querySelector('.rating-component');
+            if (!ratingCount || !ratingComponent) return;
+            
+            const baseCount = 89;
+            const variations = [
+                baseCount, 
+                baseCount + 1, 
+                baseCount + 2, 
+                baseCount + 3,
+                baseCount - 1
+            ];
+            
+            setInterval(() => {
+                const randomCount = variations[Math.floor(Math.random() * variations.length)];
+                ratingCount.textContent = `(${randomCount} отзывов)`;
+                
+                // Добавляем пиксельный glitch эффект
+                ratingComponent.style.transform = `translateX(${Math.random() * 2 - 1}px)`;
+                setTimeout(() => {
+                    ratingComponent.style.transform = 'translateX(0)';
+                }, 100);
+            }, 15000); // Каждые 15 секунд
+        }
+
+        // Запускаем анимацию рейтинга
+        document.addEventListener('DOMContentLoaded', animateRating);
+
+        // Пиксельная анимация blob форм
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob');
+            const pixelDecorations = document.querySelectorAll('.pixel-decoration');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 0.5;
+                const xPos = Math.floor(x * speed * 20 / 4) * 4; // Привязка к пиксельной сетке
+                const yPos = Math.floor(y * speed * 20 / 4) * 4;
+                
+                blob.style.transform += ` translate(${xPos}px, ${yPos}px)`;
+            });
+
+            // Пиксельная анимация декораций
+            pixelDecorations.forEach((decoration, index) => {
+                const speed = (index + 1) * 0.3;
+                const xPos = Math.floor(x * speed * 10 / 2) * 2;
+                const yPos = Math.floor(y * speed * 10 / 2) * 2;
+                
+                decoration.style.transform = `translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+
+        // Случайная пиксельная анимация декораций
+        setInterval(() => {
+            const decorations = document.querySelectorAll('.pixel-decoration');
+            decorations.forEach(decoration => {
+                const randomColor = ['var(--pixel-green)', 'var(--pixel-cyan)', 'var(--pixel-magenta)', 'var(--pixel-yellow)'][Math.floor(Math.random() * 4)];
+                decoration.style.backgroundColor = randomColor;
+            });
+        }, 2000);
+
+        // Глитч эффект для заголовка
+        setInterval(() => {
+            const title = document.querySelector('.hero h1');
+            title.style.textShadow = `
+                ${Math.random() * 4 - 2}px ${Math.random() * 4 - 2}px 0 var(--pixel-cyan),
+                ${Math.random() * 4 - 2}px ${Math.random() * 4 - 2}px 0 var(--pixel-magenta)
+            `;
+            
+            setTimeout(() => {
+                title.style.textShadow = 'none';
+            }, 100);
+        }, 5000);
+    </script>
+</body>
+</html> 
