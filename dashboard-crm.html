@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 UX/UI CRM - Полная система управления</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .crm-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Advanced Sidebar */
+        .sidebar {
+            width: 320px;
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+        }
+
+        .crm-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .sidebar-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem;
+        }
+
+        .mini-stat {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .mini-stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .mini-stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section-title {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-item {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            color: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #667eea;
+            color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(102, 126, 234, 0.3);
+            border-left-color: #667eea;
+            color: white;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-icon {
+            margin-right: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .nav-text {
+            font-weight: 500;
+        }
+
+        .nav-badge {
+            background: #ff4757;
+            color: white;
+            border-radius: 12px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .nav-arrow {
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 320px;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        /* Advanced Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-color, linear-gradient(90deg, #667eea, #764ba2));
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-info h3 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-color, #333);
+        }
+
+        .metric-info p {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .metric-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            background: var(--icon-bg, linear-gradient(135deg, #667eea 0%, #764ba2 100%));
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .change-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .change-badge.positive {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .change-badge.negative {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .metric-trend {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Content Area */
+        .content-area {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Advanced Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .data-table th {
+            background: #f8fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+
+        .data-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Charts Placeholder */
+        .chart-container {
+            height: 400px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin: 2rem 0;
+            border: 2px dashed #cbd5e0;
+        }
+
+        /* Activity Timeline */
+        .activity-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+            border-left: 2px solid #e5e7eb;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .timeline-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-time {
+            font-size: 0.8rem;
+            color: #9ca3af;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                width: 280px;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Color Variables for Cards */
+        .card-revenue { --card-color: linear-gradient(90deg, #10b981, #059669); --icon-bg: linear-gradient(135deg, #10b981, #059669); }
+        .card-students { --card-color: linear-gradient(90deg, #3b82f6, #1d4ed8); --icon-bg: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .card-conversion { --card-color: linear-gradient(90deg, #f59e0b, #d97706); --icon-bg: linear-gradient(135deg, #f59e0b, #d97706); }
+        .card-leads { --card-color: linear-gradient(90deg, #8b5cf6, #7c3aed); --icon-bg: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .card-courses { --card-color: linear-gradient(90deg, #ef4444, #dc2626); --icon-bg: linear-gradient(135deg, #ef4444, #dc2626); }
+        .card-satisfaction { --card-color: linear-gradient(90deg, #06b6d4, #0891b2); --icon-bg: linear-gradient(135deg, #06b6d4, #0891b2); }
+    </style>
+</head>
+<body>
+    <div class="crm-container">
+        <!-- Advanced Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="crm-logo">📊</div>
+                <div class="sidebar-title">UX/UI CRM</div>
+                <div class="sidebar-subtitle">Полная система управления</div>
+            </div>
+
+            <div class="stats-overview">
+                <div class="mini-stat">
+                    <div class="mini-stat-number">€12.5K</div>
+                    <div class="mini-stat-label">Месячный доход</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-number">47</div>
+                    <div class="mini-stat-label">Активных лидов</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-number">89%</div>
+                    <div class="mini-stat-label">Удовлетворенность</div>
+                </div>
+                <div class="mini-stat">
+                    <div class="mini-stat-number">23</div>
+                    <div class="mini-stat-label">Студентов</div>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Главное</div>
+                    <div class="nav-item active" onclick="switchTab('dashboard')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text">Дашборд</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('analytics')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📈</span>
+                            <span class="nav-text">Аналитика</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Продажи</div>
+                    <div class="nav-item" onclick="switchTab('leads')">
+                        <div class="nav-content">
+                            <span class="nav-icon">🎯</span>
+                            <span class="nav-text">Лиды</span>
+                        </div>
+                        <span class="nav-badge">12</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('sales-pipeline')">
+                        <div class="nav-content">
+                            <span class="nav-icon">⚡</span>
+                            <span class="nav-text">Воронка продаж</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('deals')">
+                        <div class="nav-content">
+                            <span class="nav-icon">💰</span>
+                            <span class="nav-text">Сделки</span>
+                        </div>
+                        <span class="nav-badge">5</span>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Клиенты</div>
+                    <div class="nav-item" onclick="switchTab('students')">
+                        <div class="nav-content">
+                            <span class="nav-icon">👥</span>
+                            <span class="nav-text">Студенты</span>
+                        </div>
+                        <span class="nav-badge">23</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('communications')">
+                        <div class="nav-content">
+                            <span class="nav-icon">💬</span>
+                            <span class="nav-text">Коммуникации</span>
+                        </div>
+                        <span class="nav-badge">8</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('support')">
+                        <div class="nav-content">
+                            <span class="nav-icon">🎧</span>
+                            <span class="nav-text">Поддержка</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Курсы</div>
+                    <div class="nav-item" onclick="switchTab('courses')">
+                        <div class="nav-content">
+                            <span class="nav-icon">🎓</span>
+                            <span class="nav-text">Управление курсами</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('schedule')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📅</span>
+                            <span class="nav-text">Расписание</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('content')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📚</span>
+                            <span class="nav-text">Контент</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Маркетинг</div>
+                    <div class="nav-item" onclick="switchTab('campaigns')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📢</span>
+                            <span class="nav-text">Кампании</span>
+                        </div>
+                        <span class="nav-badge">3</span>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('email-marketing')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📧</span>
+                            <span class="nav-text">Email маркетинг</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('social-media')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📱</span>
+                            <span class="nav-text">Соц. сети</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Финансы</div>
+                    <div class="nav-item" onclick="switchTab('revenue')">
+                        <div class="nav-content">
+                            <span class="nav-icon">💳</span>
+                            <span class="nav-text">Доходы</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('expenses')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📊</span>
+                            <span class="nav-text">Расходы</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('reports')">
+                        <div class="nav-content">
+                            <span class="nav-icon">📋</span>
+                            <span class="nav-text">Отчеты</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Система</div>
+                    <div class="nav-item" onclick="switchTab('automation')">
+                        <div class="nav-content">
+                            <span class="nav-icon">🤖</span>
+                            <span class="nav-text">Автоматизация</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('integrations')">
+                        <div class="nav-content">
+                            <span class="nav-icon">🔗</span>
+                            <span class="nav-text">Интеграции</span>
+                        </div>
+                    </div>
+                    <div class="nav-item" onclick="switchTab('settings')">
+                        <div class="nav-content">
+                            <span class="nav-icon">⚙️</span>
+                            <span class="nav-text">Настройки</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div class="header-content">
+                    <div>
+                        <h1>📊 CRM Дашборд</h1>
+                        <p>Полная система управления UX/UI курсами и студентами</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="action-btn action-btn-secondary">📤 Экспорт</button>
+                        <button class="action-btn">➕ Добавить лид</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div class="content-section active" id="dashboard">
+                <div class="cards-grid">
+                    <div class="metric-card card-revenue fade-in-up">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3>€46,128</h3>
+                                <p>Общий доход</p>
+                            </div>
+                            <div class="metric-icon">💰</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">↗ +28.4%</span>
+                            <span class="metric-trend">vs прошлый месяц</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card card-students fade-in-up">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3>147</h3>
+                                <p>Всего студентов</p>
+                            </div>
+                            <div class="metric-icon">👥</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">↗ +18.2%</span>
+                            <span class="metric-trend">vs прошлый месяц</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card card-conversion fade-in-up">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3>24.7%</h3>
+                                <p>Конверсия лид → клиент</p>
+                            </div>
+                            <div class="metric-icon">⚡</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">↗ +5.1%</span>
+                            <span class="metric-trend">vs прошлый месяц</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card card-leads fade-in-up">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3>89</h3>
+                                <p>Активных лидов</p>
+                            </div>
+                            <div class="metric-icon">🎯</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">↗ +12.3%</span>
+                            <span class="metric-trend">vs прошлая неделя</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card card-courses fade-in-up">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3>8</h3>
+                                <p>Активных курсов</p>
+                            </div>
+                            <div class="metric-icon">🎓</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">↗ +2</span>
+                            <span class="metric-trend">новых курса</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card card-satisfaction fade-in-up">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3>4.9/5</h3>
+                                <p>Удовлетворенность</p>
+                            </div>
+                            <div class="metric-icon">⭐</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">↗ +0.2</span>
+                            <span class="metric-trend">vs прошлый квартал</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Chart -->
+                <div class="content-area">
+                    <h2>📈 Динамика доходов</h2>
+                    <div class="chart-container">
+                        📊 Здесь будет интерактивный график доходов за последние 12 месяцев
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="content-area">
+                    <h2>🕒 Последняя активность</h2>
+                    <div class="activity-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Новая регистрация на курс</div>
+                                <div class="timeline-description">Александра Петрова записалась на курс "UX/UI Дизайн - Продвинутый уровень"</div>
+                                <div class="timeline-time">15 минут назад</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Платеж получен</div>
+                                <div class="timeline-description">€2,008.19 от Дмитрия Иванова за базовый курс UX/UI</div>
+                                <div class="timeline-time">1 час назад</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Отзыв оставлен</div>
+                                <div class="timeline-description">Мария Сидорова оставила 5-звездочный отзыв о курсе</div>
+                                <div class="timeline-time">3 часа назад</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <div class="timeline-title">Email кампания запущена</div>
+                                <div class="timeline-description">Отправлена рассылка "Скидка 20% на новые курсы" 250 подписчикам</div>
+                                <div class="timeline-time">5 часов назад</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leads Section -->
+            <div class="content-section" id="leads">
+                <div class="content-area">
+                    <h2>🎯 Управление лидами</h2>
+                    <div class="cards-grid">
+                        <div class="metric-card">
+                            <h3>47</h3>
+                            <p>Новые лиды</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>23</h3>
+                            <p>Горячие лиды</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>€1,245</h3>
+                            <p>Средний чек</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>24.7%</h3>
+                            <p>Конверсия</p>
+                        </div>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Email</th>
+                                <th>Телефон</th>
+                                <th>Источник</th>
+                                <th>Статус</th>
+                                <th>Дата</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Анна Козлова</strong></td>
+                                <td>anna.kozlova@email.com</td>
+                                <td>+372 555 1234</td>
+                                <td>Instagram</td>
+                                <td><span class="status-badge status-active">Горячий</span></td>
+                                <td>23.01.2025</td>
+                                <td>
+                                    <button class="action-btn">📞 Звонок</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Иван Петров</strong></td>
+                                <td>ivan.petrov@email.com</td>
+                                <td>+372 555 5678</td>
+                                <td>Google Ads</td>
+                                <td><span class="status-badge status-pending">Теплый</span></td>
+                                <td>22.01.2025</td>
+                                <td>
+                                    <button class="action-btn">📧 Email</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Мария Власова</strong></td>
+                                <td>maria.vlasova@email.com</td>
+                                <td>+372 555 9012</td>
+                                <td>Facebook</td>
+                                <td><span class="status-badge status-active">Горячий</span></td>
+                                <td>21.01.2025</td>
+                                <td>
+                                    <button class="action-btn">💬 Чат</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Students Section -->
+            <div class="content-section" id="students">
+                <div class="content-area">
+                    <h2>👥 Студенты</h2>
+                    <div class="cards-grid">
+                        <div class="metric-card">
+                            <h3>147</h3>
+                            <p>Всего студентов</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>89</h3>
+                            <p>Активных</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>23</h3>
+                            <p>Завершили курс</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>95%</h3>
+                            <p>Retention Rate</p>
+                        </div>
+                    </div>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Студент</th>
+                                <th>Курс</th>
+                                <th>Прогресс</th>
+                                <th>Статус</th>
+                                <th>Дата начала</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Александр Петров</strong><br><small>alex.petrov@email.com</small></td>
+                                <td>UX/UI Дизайн Базовый</td>
+                                <td>
+                                    <div style="background: #e5e7eb; border-radius: 10px; height: 8px; position: relative;">
+                                        <div style="background: #10b981; border-radius: 10px; height: 100%; width: 65%;"></div>
+                                    </div>
+                                    <small>65% завершено</small>
+                                </td>
+                                <td><span class="status-badge status-active">Активный</span></td>
+                                <td>15.12.2024</td>
+                                <td>
+                                    <button class="action-btn">👁️ Профиль</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Мария Сидорова</strong><br><small>maria.sidorova@email.com</small></td>
+                                <td>UX/UI Дизайн Продвинутый</td>
+                                <td>
+                                    <div style="background: #e5e7eb; border-radius: 10px; height: 8px; position: relative;">
+                                        <div style="background: #3b82f6; border-radius: 10px; height: 100%; width: 100%;"></div>
+                                    </div>
+                                    <small>Завершен</small>
+                                </td>
+                                <td><span class="status-badge status-active">Завершен</span></td>
+                                <td>01.11.2024</td>
+                                <td>
+                                    <button class="action-btn">🎓 Сертификат</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Add other sections similarly... -->
+            <div class="content-section" id="analytics">
+                <div class="content-area">
+                    <h2>📈 Подробная аналитика</h2>
+                    <div class="chart-container">
+                        📊 Здесь будут подробные графики и аналитика
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional sections for other nav items would be added here -->
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        function switchTab(tabName) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked nav item
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected content section
+            const targetSection = document.getElementById(tabName);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        }
+
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Real-time data simulation
+        function updateRealTimeData() {
+            // Simulate real-time updates for metrics
+            const metrics = [
+                { selector: '.card-revenue h3', baseValue: 46128, variance: 500 },
+                { selector: '.card-students h3', baseValue: 147, variance: 3 },
+                { selector: '.card-leads h3', baseValue: 89, variance: 5 }
+            ];
+            
+            metrics.forEach(metric => {
+                const element = document.querySelector(metric.selector);
+                if (element) {
+                    const newValue = metric.baseValue + Math.floor(Math.random() * metric.variance * 2 - metric.variance);
+                    if (metric.selector.includes('revenue')) {
+                        element.textContent = '€' + newValue.toLocaleString();
+                    } else {
+                        element.textContent = newValue;
+                    }
+                }
+            });
+        }
+
+        // Add interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click animations to metric cards
+            document.querySelectorAll('.metric-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98) translateY(-8px)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Add fade-in animations
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.metric-card, .content-area').forEach(element => {
+                observer.observe(element);
+            });
+
+            // Update real-time data every 30 seconds
+            setInterval(updateRealTimeData, 30000);
+        });
+
+        // Add mobile menu button for small screens
+        if (window.innerWidth <= 768) {
+            const menuBtn = document.createElement('button');
+            menuBtn.innerHTML = '☰';
+            menuBtn.style.cssText = `
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+                background: #667eea;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 0.8rem;
+                font-size: 1.2rem;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            `;
+            menuBtn.onclick = toggleSidebar;
+            document.body.appendChild(menuBtn);
+        }
+    </script>
+</body>
+</html> 

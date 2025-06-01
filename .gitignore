@@ -4,6 +4,7 @@
 # Но включаем только нужные файлы
 !index.html
 !dashboard.html
+!dashboard-crm.html
 !README.md
 !.gitignore
 !.nojekyll
