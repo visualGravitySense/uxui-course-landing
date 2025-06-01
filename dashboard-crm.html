@@ -32,6 +32,7 @@
             height: 100vh;
             overflow-y: auto;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         .sidebar-header {
@@ -40,6 +41,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             position: relative;
+            border-bottom: 3px solid rgba(255,255,255,0.1);
         }
 
         .crm-logo {
@@ -53,6 +55,12 @@
             margin: 0 auto 1rem;
             font-size: 2rem;
             border: 3px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .crm-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255,255,255,0.2);
         }
 
         .sidebar-title {
@@ -66,6 +74,7 @@
             opacity: 0.9;
         }
 
+        /* Улучшенные статистики с когнитивными помощниками */
         .stats-overview {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -76,15 +85,26 @@
         .mini-stat {
             background: rgba(255,255,255,0.1);
             padding: 1rem;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .mini-stat:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
 
         .mini-stat-number {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.3rem;
+            position: relative;
         }
 
         .mini-stat-label {
@@ -92,24 +112,82 @@
             opacity: 0.9;
         }
 
+        /* Progressive disclosure для статистик */
+        .mini-stat::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mini-stat:hover::after {
+            opacity: 1;
+            bottom: -30px;
+        }
+
         .nav-menu {
             padding: 1rem 0;
         }
 
         .nav-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .nav-section-title {
             color: rgba(255,255,255,0.6);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 0 2rem;
-            margin-bottom: 1rem;
+            padding: 0.8rem 2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 0 25px 25px 0;
         }
 
+        .nav-section-title:hover {
+            color: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Иконка сворачивания секций */
+        .nav-section-toggle {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-section.collapsed .nav-section-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .nav-section.collapsed .nav-items {
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .nav-items {
+            max-height: 500px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        /* Улучшенные nav items с когнитивными помощниками */
         .nav-item {
             padding: 1rem 2rem;
             cursor: pointer;
@@ -119,46 +197,176 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: relative;
+            margin: 0.2rem 0;
+            border-radius: 0 25px 25px 0;
         }
 
         .nav-item:hover {
-            background: rgba(255,255,255,0.1);
+            background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
             border-left-color: #667eea;
             color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
         }
 
         .nav-item.active {
-            background: rgba(102, 126, 234, 0.3);
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.4), rgba(102, 126, 234, 0.2));
             border-left-color: #667eea;
             color: white;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid #667eea;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
         }
 
         .nav-content {
             display: flex;
             align-items: center;
+            flex: 1;
         }
 
         .nav-icon {
             margin-right: 1rem;
             font-size: 1.3rem;
+            transition: all 0.3s ease;
+            min-width: 24px;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: scale(1.1);
         }
 
         .nav-text {
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
+        /* Улучшенные badges с анимацией */
         .nav-badge {
-            background: #ff4757;
+            background: linear-gradient(135deg, #ff4757, #ff3742);
             color: white;
             border-radius: 12px;
             padding: 0.3rem 0.7rem;
             font-size: 0.7rem;
             font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+            animation: badge-pulse 2s ease-in-out infinite;
+            box-shadow: 0 2px 8px rgba(255, 71, 87, 0.4);
         }
 
-        .nav-arrow {
+        @keyframes badge-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Tooltip для nav items */
+        .nav-item[data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-left: 10px;
+        }
+
+        .nav-item:hover[data-tooltip]::after {
+            opacity: 1;
+        }
+
+        /* Индикатор активности в реальном времени */
+        .activity-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 8px;
+            height: 8px;
+            background: #00ff41;
+            border-radius: 50%;
+            animation: activity-blink 2s ease-in-out infinite;
+        }
+
+        @keyframes activity-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Визуальная иерархия с лучшим группированием */
+        .nav-section:nth-child(1) .nav-section-title { border-left: 4px solid #4ecdc4; }
+        .nav-section:nth-child(2) .nav-section-title { border-left: 4px solid #45b7d1; }
+        .nav-section:nth-child(3) .nav-section-title { border-left: 4px solid #f39c12; }
+        .nav-section:nth-child(4) .nav-section-title { border-left: 4px solid #e74c3c; }
+        .nav-section:nth-child(5) .nav-section-title { border-left: 4px solid #9b59b6; }
+        .nav-section:nth-child(6) .nav-section-title { border-left: 4px solid #27ae60; }
+        .nav-section:nth-child(7) .nav-section-title { border-left: 4px solid #f1c40f; }
+
+        /* Быстрые действия в подвале меню */
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.2);
+            padding: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .quick-action-btn {
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             font-size: 0.8rem;
-            opacity: 0.6;
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Индикатор прогресса загрузки */
+        .loading-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar.loading .loading-indicator {
+            width: 100%;
         }
 
         /* Main Content */
@@ -568,22 +776,23 @@
                 <div class="crm-logo">📊</div>
                 <div class="sidebar-title">UX/UI CRM</div>
                 <div class="sidebar-subtitle">Полная система управления</div>
+                <div class="activity-indicator" title="Система активна"></div>
             </div>
 
             <div class="stats-overview">
-                <div class="mini-stat">
+                <div class="mini-stat" data-tooltip="↗ +15% за неделю">
                     <div class="mini-stat-number">€12.5K</div>
                     <div class="mini-stat-label">Месячный доход</div>
                 </div>
-                <div class="mini-stat">
+                <div class="mini-stat" data-tooltip="12 новых сегодня">
                     <div class="mini-stat-number">47</div>
                     <div class="mini-stat-label">Активных лидов</div>
                 </div>
-                <div class="mini-stat">
+                <div class="mini-stat" data-tooltip="4.9/5 средний рейтинг">
                     <div class="mini-stat-number">89%</div>
                     <div class="mini-stat-label">Удовлетворенность</div>
                 </div>
-                <div class="mini-stat">
+                <div class="mini-stat" data-tooltip="5 новых регистраций">
                     <div class="mini-stat-number">23</div>
                     <div class="mini-stat-label">Студентов</div>
                 </div>
@@ -591,158 +800,209 @@
 
             <nav class="nav-menu">
                 <div class="nav-section">
-                    <div class="nav-section-title">Главное</div>
-                    <div class="nav-item active" onclick="switchTab('dashboard')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📊</span>
-                            <span class="nav-text">Дашборд</span>
-                        </div>
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        Главное
+                        <span class="nav-section-toggle">▼</span>
                     </div>
-                    <div class="nav-item" onclick="switchTab('analytics')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📈</span>
-                            <span class="nav-text">Аналитика</span>
+                    <div class="nav-items">
+                        <div class="nav-item active" onclick="switchTab('dashboard')" data-tooltip="Обзор ключевых метрик">
+                            <div class="nav-content">
+                                <span class="nav-icon">📊</span>
+                                <span class="nav-text">Дашборд</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Продажи</div>
-                    <div class="nav-item" onclick="switchTab('leads')">
-                        <div class="nav-content">
-                            <span class="nav-icon">🎯</span>
-                            <span class="nav-text">Лиды</span>
-                        </div>
-                        <span class="nav-badge">12</span>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('sales-pipeline')">
-                        <div class="nav-content">
-                            <span class="nav-icon">⚡</span>
-                            <span class="nav-text">Воронка продаж</span>
-                        </div>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('deals')">
-                        <div class="nav-content">
-                            <span class="nav-icon">💰</span>
-                            <span class="nav-text">Сделки</span>
-                        </div>
-                        <span class="nav-badge">5</span>
-                    </div>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Клиенты</div>
-                    <div class="nav-item" onclick="switchTab('students')">
-                        <div class="nav-content">
-                            <span class="nav-icon">👥</span>
-                            <span class="nav-text">Студенты</span>
-                        </div>
-                        <span class="nav-badge">23</span>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('communications')">
-                        <div class="nav-content">
-                            <span class="nav-icon">💬</span>
-                            <span class="nav-text">Коммуникации</span>
-                        </div>
-                        <span class="nav-badge">8</span>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('support')">
-                        <div class="nav-content">
-                            <span class="nav-icon">🎧</span>
-                            <span class="nav-text">Поддержка</span>
+                        <div class="nav-item" onclick="switchTab('analytics')" data-tooltip="Детальная аналитика">
+                            <div class="nav-content">
+                                <span class="nav-icon">📈</span>
+                                <span class="nav-text">Аналитика</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="nav-section">
-                    <div class="nav-section-title">Курсы</div>
-                    <div class="nav-item" onclick="switchTab('courses')">
-                        <div class="nav-content">
-                            <span class="nav-icon">🎓</span>
-                            <span class="nav-text">Управление курсами</span>
-                        </div>
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        Продажи
+                        <span class="nav-section-toggle">▼</span>
                     </div>
-                    <div class="nav-item" onclick="switchTab('schedule')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📅</span>
-                            <span class="nav-text">Расписание</span>
+                    <div class="nav-items">
+                        <div class="nav-item" onclick="switchTab('leads')" data-tooltip="Управление потенциальными клиентами">
+                            <div class="nav-content">
+                                <span class="nav-icon">🎯</span>
+                                <span class="nav-text">Лиды</span>
+                            </div>
+                            <span class="nav-badge">12</span>
                         </div>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('content')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📚</span>
-                            <span class="nav-text">Контент</span>
+                        <div class="nav-item" onclick="switchTab('sales-pipeline')" data-tooltip="Отслеживание воронки продаж">
+                            <div class="nav-content">
+                                <span class="nav-icon">⚡</span>
+                                <span class="nav-text">Воронка продаж</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Маркетинг</div>
-                    <div class="nav-item" onclick="switchTab('campaigns')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📢</span>
-                            <span class="nav-text">Кампании</span>
-                        </div>
-                        <span class="nav-badge">3</span>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('email-marketing')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📧</span>
-                            <span class="nav-text">Email маркетинг</span>
-                        </div>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('social-media')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📱</span>
-                            <span class="nav-text">Соц. сети</span>
+                        <div class="nav-item" onclick="switchTab('deals')" data-tooltip="Активные сделки и предложения">
+                            <div class="nav-content">
+                                <span class="nav-icon">💰</span>
+                                <span class="nav-text">Сделки</span>
+                            </div>
+                            <span class="nav-badge">5</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="nav-section">
-                    <div class="nav-section-title">Финансы</div>
-                    <div class="nav-item" onclick="switchTab('revenue')">
-                        <div class="nav-content">
-                            <span class="nav-icon">💳</span>
-                            <span class="nav-text">Доходы</span>
-                        </div>
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        Клиенты
+                        <span class="nav-section-toggle">▼</span>
                     </div>
-                    <div class="nav-item" onclick="switchTab('expenses')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📊</span>
-                            <span class="nav-text">Расходы</span>
+                    <div class="nav-items">
+                        <div class="nav-item" onclick="switchTab('students')" data-tooltip="База данных всех студентов">
+                            <div class="nav-content">
+                                <span class="nav-icon">👥</span>
+                                <span class="nav-text">Студенты</span>
+                            </div>
+                            <span class="nav-badge">23</span>
                         </div>
-                    </div>
-                    <div class="nav-item" onclick="switchTab('reports')">
-                        <div class="nav-content">
-                            <span class="nav-icon">📋</span>
-                            <span class="nav-text">Отчеты</span>
+                        <div class="nav-item" onclick="switchTab('communications')" data-tooltip="История общения с клиентами">
+                            <div class="nav-content">
+                                <span class="nav-icon">💬</span>
+                                <span class="nav-text">Коммуникации</span>
+                            </div>
+                            <span class="nav-badge">8</span>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('support')" data-tooltip="Служба поддержки клиентов">
+                            <div class="nav-content">
+                                <span class="nav-icon">🎧</span>
+                                <span class="nav-text">Поддержка</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="nav-section">
-                    <div class="nav-section-title">Система</div>
-                    <div class="nav-item" onclick="switchTab('automation')">
-                        <div class="nav-content">
-                            <span class="nav-icon">🤖</span>
-                            <span class="nav-text">Автоматизация</span>
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        Курсы
+                        <span class="nav-section-toggle">▼</span>
+                    </div>
+                    <div class="nav-items">
+                        <div class="nav-item" onclick="switchTab('courses')" data-tooltip="Создание и редактирование курсов">
+                            <div class="nav-content">
+                                <span class="nav-icon">🎓</span>
+                                <span class="nav-text">Управление курсами</span>
+                            </div>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('schedule')" data-tooltip="Календарь занятий и событий">
+                            <div class="nav-content">
+                                <span class="nav-icon">📅</span>
+                                <span class="nav-text">Расписание</span>
+                            </div>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('content')" data-tooltip="Материалы и ресурсы для обучения">
+                            <div class="nav-content">
+                                <span class="nav-icon">📚</span>
+                                <span class="nav-text">Контент</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="nav-item" onclick="switchTab('integrations')">
-                        <div class="nav-content">
-                            <span class="nav-icon">🔗</span>
-                            <span class="nav-text">Интеграции</span>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        Маркетинг
+                        <span class="nav-section-toggle">▼</span>
+                    </div>
+                    <div class="nav-items">
+                        <div class="nav-item" onclick="switchTab('campaigns')" data-tooltip="Рекламные кампании и их эффективность">
+                            <div class="nav-content">
+                                <span class="nav-icon">📢</span>
+                                <span class="nav-text">Кампании</span>
+                            </div>
+                            <span class="nav-badge">3</span>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('email-marketing')" data-tooltip="Email рассылки и автоворонки">
+                            <div class="nav-content">
+                                <span class="nav-icon">📧</span>
+                                <span class="nav-text">Email маркетинг</span>
+                            </div>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('social-media')" data-tooltip="Управление соцсетями">
+                            <div class="nav-content">
+                                <span class="nav-icon">📱</span>
+                                <span class="nav-text">Соц. сети</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="nav-item" onclick="switchTab('settings')">
-                        <div class="nav-content">
-                            <span class="nav-icon">⚙️</span>
-                            <span class="nav-text">Настройки</span>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        Финансы
+                        <span class="nav-section-toggle">▼</span>
+                    </div>
+                    <div class="nav-items">
+                        <div class="nav-item" onclick="switchTab('revenue')" data-tooltip="Отчеты по доходам и прибыли">
+                            <div class="nav-content">
+                                <span class="nav-icon">💳</span>
+                                <span class="nav-text">Доходы</span>
+                            </div>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('expenses')" data-tooltip="Учет расходов и затрат">
+                            <div class="nav-content">
+                                <span class="nav-icon">📊</span>
+                                <span class="nav-text">Расходы</span>
+                            </div>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('reports')" data-tooltip="Финансовые отчеты и прогнозы">
+                            <div class="nav-content">
+                                <span class="nav-icon">📋</span>
+                                <span class="nav-text">Отчеты</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title" onclick="toggleSection(this)">
+                        Система
+                        <span class="nav-section-toggle">▼</span>
+                    </div>
+                    <div class="nav-items">
+                        <div class="nav-item" onclick="switchTab('automation')" data-tooltip="Настройка автоматизации процессов">
+                            <div class="nav-content">
+                                <span class="nav-icon">🤖</span>
+                                <span class="nav-text">Автоматизация</span>
+                            </div>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('integrations')" data-tooltip="Интеграции с внешними сервисами">
+                            <div class="nav-content">
+                                <span class="nav-icon">🔗</span>
+                                <span class="nav-text">Интеграции</span>
+                            </div>
+                        </div>
+                        <div class="nav-item" onclick="switchTab('settings')" data-tooltip="Основные настройки системы">
+                            <div class="nav-content">
+                                <span class="nav-icon">⚙️</span>
+                                <span class="nav-text">Настройки</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </nav>
+
+            <div class="sidebar-footer">
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="quickAction('add-lead')" title="Быстро добавить лида">
+                        ➕
+                    </button>
+                    <button class="quick-action-btn" onclick="quickAction('notifications')" title="Уведомления">
+                        🔔
+                    </button>
+                    <button class="quick-action-btn" onclick="quickAction('help')" title="Помощь">
+                        ❓
+                    </button>
+                </div>
+            </div>
+
+            <div class="loading-indicator"></div>
         </div>
 
         <!-- Main Content -->
@@ -1071,6 +1331,95 @@
             if (targetSection) {
                 targetSection.classList.add('active');
             }
+
+            // Показать индикатор загрузки на 500ms для обратной связи
+            showLoadingFeedback();
+        }
+
+        // UX Feature: Progressive Disclosure - Сворачивание секций меню
+        function toggleSection(sectionTitle) {
+            const section = sectionTitle.parentElement;
+            const navItems = section.querySelector('.nav-items');
+            const toggle = sectionTitle.querySelector('.nav-section-toggle');
+            
+            section.classList.toggle('collapsed');
+            
+            // Анимация стрелки
+            if (section.classList.contains('collapsed')) {
+                toggle.style.transform = 'rotate(-90deg)';
+            } else {
+                toggle.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // UX Feature: Быстрые действия
+        function quickAction(actionType) {
+            const sidebar = document.getElementById('sidebar');
+            
+            switch(actionType) {
+                case 'add-lead':
+                    // Cognitive Aid: Визуальная обратная связь
+                    showNotification('🎯 Форма добавления лида открыта', 'success');
+                    // Здесь можно открыть модальное окно
+                    break;
+                case 'notifications':
+                    showNotification('🔔 У вас 3 новых уведомления', 'info');
+                    break;
+                case 'help':
+                    showNotification('❓ Открываю справочный центр', 'info');
+                    break;
+            }
+            
+            // Тактильная обратная связь
+            showLoadingFeedback();
+        }
+
+        // UX Feature: Когнитивная помощь - Уведомления
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-weight: 600;
+                transform: translateX(400px);
+                transition: all 0.3s ease;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Анимация появления
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Автоудаление
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // UX Feature: Визуальная обратная связь при загрузке
+        function showLoadingFeedback() {
+            const sidebar = document.getElementById('sidebar');
+            const loadingIndicator = sidebar.querySelector('.loading-indicator');
+            
+            sidebar.classList.add('loading');
+            
+            setTimeout(() => {
+                sidebar.classList.remove('loading');
+            }, 500);
         }
 
         // Mobile sidebar toggle
@@ -1078,41 +1427,116 @@
             document.getElementById('sidebar').classList.toggle('open');
         }
 
-        // Real-time data simulation
+        // Real-time data simulation with cognitive feedback
         function updateRealTimeData() {
-            // Simulate real-time updates for metrics
             const metrics = [
-                { selector: '.card-revenue h3', baseValue: 46128, variance: 500 },
-                { selector: '.card-students h3', baseValue: 147, variance: 3 },
-                { selector: '.card-leads h3', baseValue: 89, variance: 5 }
+                { selector: '.card-revenue h3', baseValue: 46128, variance: 500, format: 'currency' },
+                { selector: '.card-students h3', baseValue: 147, variance: 3, format: 'number' },
+                { selector: '.card-leads h3', baseValue: 89, variance: 5, format: 'number' }
             ];
             
             metrics.forEach(metric => {
                 const element = document.querySelector(metric.selector);
                 if (element) {
                     const newValue = metric.baseValue + Math.floor(Math.random() * metric.variance * 2 - metric.variance);
-                    if (metric.selector.includes('revenue')) {
-                        element.textContent = '€' + newValue.toLocaleString();
-                    } else {
-                        element.textContent = newValue;
-                    }
+                    
+                    // Анимация изменения
+                    element.style.transform = 'scale(1.1)';
+                    element.style.color = '#10b981';
+                    
+                    setTimeout(() => {
+                        if (metric.format === 'currency') {
+                            element.textContent = '€' + newValue.toLocaleString();
+                        } else {
+                            element.textContent = newValue;
+                        }
+                        
+                        element.style.transform = 'scale(1)';
+                        element.style.color = '';
+                    }, 200);
                 }
             });
         }
 
-        // Add interactivity
+        // UX Feature: Smart defaults и адаптивность
+        function initializeSmartDefaults() {
+            // Определяем время дня для адаптивного приветствия
+            const hour = new Date().getHours();
+            let greeting = '';
+            
+            if (hour < 12) greeting = '🌅 Доброе утро!';
+            else if (hour < 18) greeting = '☀️ Добрый день!';
+            else greeting = '🌙 Добрый вечер!';
+            
+            // Показываем приветствие
+            setTimeout(() => {
+                showNotification(greeting + ' Добро пожаловать в CRM', 'info');
+            }, 1000);
+            
+            // Устанавливаем фокус на самый важный раздел (Лиды) если есть новые
+            const leadsSection = document.querySelector('[onclick="switchTab(\'leads\')"]');
+            const leadsBadge = leadsSection?.querySelector('.nav-badge');
+            if (leadsBadge && parseInt(leadsBadge.textContent) > 10) {
+                leadsSection.style.animation = 'attention-pulse 2s ease-in-out infinite';
+            }
+        }
+
+        // UX Feature: Keyboard navigation для accessibility
+        function handleKeyboardNavigation(event) {
+            const activeElement = document.activeElement;
+            const navItems = Array.from(document.querySelectorAll('.nav-item'));
+            const currentIndex = navItems.indexOf(activeElement);
+            
+            switch(event.key) {
+                case 'ArrowDown':
+                    event.preventDefault();
+                    const nextIndex = (currentIndex + 1) % navItems.length;
+                    navItems[nextIndex].focus();
+                    break;
+                case 'ArrowUp':
+                    event.preventDefault();
+                    const prevIndex = currentIndex === 0 ? navItems.length - 1 : currentIndex - 1;
+                    navItems[prevIndex].focus();
+                    break;
+                case 'Enter':
+                case ' ':
+                    event.preventDefault();
+                    if (activeElement.classList.contains('nav-item')) {
+                        activeElement.click();
+                    }
+                    break;
+            }
+        }
+
+        // Add interactivity with enhanced UX
         document.addEventListener('DOMContentLoaded', function() {
-            // Add click animations to metric cards
+            // Initialize smart defaults
+            initializeSmartDefaults();
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', handleKeyboardNavigation);
+            
+            // Make nav items focusable for accessibility
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.setAttribute('tabindex', '0');
+            });
+            
+            // Enhanced click animations with haptic feedback
             document.querySelectorAll('.metric-card').forEach(card => {
                 card.addEventListener('click', function() {
                     this.style.transform = 'scale(0.98) translateY(-8px)';
+                    
+                    // Добавляем когнитивную обратную связь
+                    const cardTitle = this.querySelector('p').textContent;
+                    showNotification(`📊 Открываю детали: ${cardTitle}`, 'info');
+                    
                     setTimeout(() => {
                         this.style.transform = '';
                     }, 150);
                 });
             });
 
-            // Add fade-in animations
+            // Progressive enhancement для tooltip'ов
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1125,11 +1549,27 @@
                 observer.observe(element);
             });
 
-            // Update real-time data every 30 seconds
-            setInterval(updateRealTimeData, 30000);
+            // UX Feature: Contextual help
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showNotification('💡 Подсказка: Используйте стрелки ↑↓ для навигации по меню', 'info');
+            });
+
+            // Update real-time data every 30 seconds with user notification
+            setInterval(() => {
+                updateRealTimeData();
+                // Subtle notification about data refresh
+                const indicator = document.querySelector('.activity-indicator');
+                if (indicator) {
+                    indicator.style.background = '#00ff41';
+                    setTimeout(() => {
+                        indicator.style.background = '';
+                    }, 1000);
+                }
+            }, 30000);
         });
 
-        // Add mobile menu button for small screens
+        // Add mobile menu button for small screens with enhanced UX
         if (window.innerWidth <= 768) {
             const menuBtn = document.createElement('button');
             menuBtn.innerHTML = '☰';
@@ -1138,18 +1578,49 @@
                 top: 1rem;
                 left: 1rem;
                 z-index: 1001;
-                background: #667eea;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 border: none;
-                border-radius: 8px;
+                border-radius: 12px;
                 padding: 0.8rem;
                 font-size: 1.2rem;
                 cursor: pointer;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
             `;
-            menuBtn.onclick = toggleSidebar;
+            
+            menuBtn.onclick = () => {
+                toggleSidebar();
+                showNotification('📱 Мобильное меню открыто', 'info');
+            };
+            
+            // Добавляем hover эффект для мобильной кнопки
+            menuBtn.addEventListener('mouseenter', () => {
+                menuBtn.style.transform = 'scale(1.1)';
+            });
+            
+            menuBtn.addEventListener('mouseleave', () => {
+                menuBtn.style.transform = 'scale(1)';
+            });
+            
             document.body.appendChild(menuBtn);
         }
+
+        // CSS для дополнительных анимаций
+        const additionalStyles = document.createElement('style');
+        additionalStyles.textContent = `
+            @keyframes attention-pulse {
+                0%, 100% { 
+                    transform: scale(1);
+                    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+                }
+                50% { 
+                    transform: scale(1.05);
+                    box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+                }
+            }
+        `;
+        document.head.appendChild(additionalStyles);
     </script>
 </body>
 </html> 
