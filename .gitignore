@@ -1,0 +1,25 @@
+# Исключаем все файлы по умолчанию
+*
+
+# Но включаем только нужные файлы
+!index.html
+!dashboard.html
+!README.md
+!.gitignore
+
+# Исключения для папок (если нужны будут)
+# !assets/
+# !css/
+# !js/
+
+# Системные файлы (всегда исключаем)
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tmp
+.env
+node_modules/
+*.swp
+*.swo
+*~ 

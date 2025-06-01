@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 UX/UI Курс - Центр управления</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #ffffff;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .sidebar-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .stats-card {
+            margin: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stats-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            padding: 1rem 0;
+        }
+
+        .nav-item {
+            padding: 0.75rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-left-color: #667eea;
+        }
+
+        .nav-item.active {
+            background: rgba(102, 126, 234, 0.15);
+            border-left-color: #667eea;
+            color: #667eea;
+        }
+
+        .nav-icon {
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .nav-text {
+            font-weight: 500;
+        }
+
+        .nav-badge {
+            background: #ff4757;
+            color: white;
+            border-radius: 10px;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            margin-left: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .metric-info h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-info p {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .metric-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .change-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .change-badge.positive {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .change-badge.negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* Content Area */
+        .content-area {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Chart placeholder */
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-avatar">🎓</div>
+                <div class="sidebar-title">UX/UI Курс</div>
+                <div class="sidebar-subtitle">Центр управления</div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-number">23</div>
+                <div class="stats-label">Студентов</div>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-item active" onclick="switchTab('overview')">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Обзор</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('course')">
+                    <span class="nav-icon">🎓</span>
+                    <span class="nav-text">Управление курсом</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('students')">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Студенты</span>
+                    <span class="nav-badge">3</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('marketing')">
+                    <span class="nav-icon">📢</span>
+                    <span class="nav-text">Маркетинг</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('website')">
+                    <span class="nav-icon">🌐</span>
+                    <span class="nav-text">Редактор сайта</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('analytics')">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Аналитика</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('automation')">
+                    <span class="nav-icon">🤖</span>
+                    <span class="nav-text">Автоматизация</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('interviews')">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Интервью</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('settings')">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Настройки</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>🎓 UX/UI Курс - Центр управления</h1>
+                <p>Полное управление курсом, студентами и маркетингом в одном месте</p>
+            </div>
+
+            <!-- Overview Section -->
+            <div class="content-section active" id="overview">
+                <div class="cards-grid">
+                    <div class="metric-card fade-in">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3 style="color: #667eea;">23</h3>
+                                <p>Всего студентов</p>
+                            </div>
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">👥</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">+18%</span>
+                            <span style="color: #666; font-size: 0.9rem;">vs прошлый месяц</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card fade-in">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3 style="color: #4CAF50;">€4,016</h3>
+                                <p>Общий доход</p>
+                            </div>
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);">💰</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">+24%</span>
+                            <span style="color: #666; font-size: 0.9rem;">vs прошлый месяц</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card fade-in">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3 style="color: #FF9800;">15.2%</h3>
+                                <p>Конверсия</p>
+                            </div>
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);">📈</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">+3.2%</span>
+                            <span style="color: #666; font-size: 0.9rem;">vs прошлый месяц</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card fade-in">
+                        <div class="metric-header">
+                            <div class="metric-info">
+                                <h3 style="color: #2196F3;">1,250</h3>
+                                <p>Посетители</p>
+                            </div>
+                            <div class="metric-icon" style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);">👀</div>
+                        </div>
+                        <div class="metric-change">
+                            <span class="change-badge positive">+12%</span>
+                            <span style="color: #666; font-size: 0.9rem;">vs прошлая неделя</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="switchTab('course')">
+                        🎓 Редактировать курс
+                    </button>
+                    <button class="action-btn" onclick="switchTab('students')">
+                        👥 Просмотреть записи
+                    </button>
+                    <button class="action-btn" onclick="switchTab('marketing')">
+                        📢 Запустить кампанию
+                    </button>
+                    <button class="action-btn" onclick="switchTab('website')">
+                        🌐 Обновить сайт
+                    </button>
+                </div>
+
+                <div class="content-area">
+                    <h2>📊 Последняя активность</h2>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Новая запись на курс</div>
+                                <div class="activity-time">Александр П. записался 2 часа назад</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">💰</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Получен платеж</div>
+                                <div class="activity-time">€199 от Марии С. 4 часа назад</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">📢</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Опубликован пост</div>
+                                <div class="activity-time">Telegram канал 6 часов назад</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">📈</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Цель достигнута</div>
+                                <div class="activity-time">20 записей в этом месяце</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Course Management Section -->
+            <div class="content-section" id="course">
+                <div class="content-area">
+                    <h2>🎓 Управление курсом</h2>
+                    <div class="form-group">
+                        <label class="form-label">Название курса</label>
+                        <input type="text" class="form-input" value="UX/UI Дизайн - Полный курс" placeholder="Введите название курса">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Описание</label>
+                        <textarea class="form-input form-textarea" placeholder="Описание курса">Изучите современный UX/UI дизайн с нуля до профессионального уровня. Практические проекты, реальные кейсы, трудоустройство.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Цена курса (€)</label>
+                        <input type="number" class="form-input" value="199" placeholder="199">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Длительность (недель)</label>
+                        <input type="number" class="form-input" value="12" placeholder="12">
+                    </div>
+                    <button class="action-btn" style="margin-top: 1rem;">
+                        💾 Сохранить изменения
+                    </button>
+                </div>
+            </div>
+
+            <!-- Students Section -->
+            <div class="content-section" id="students">
+                <div class="content-area">
+                    <h2>👥 Управление студентами</h2>
+                    <div class="cards-grid" style="margin-bottom: 2rem;">
+                        <div class="metric-card">
+                            <h3>23</h3>
+                            <p>Всего студентов</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>18</h3>
+                            <p>Активных</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>3</h3>
+                            <p>Ожидают оплаты</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>2</h3>
+                            <p>Завершили курс</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Последние записи</h3>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Александр Петров</div>
+                                <div class="activity-time">Записался 15.01.2025 • Оплачено ✅</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Мария Сидорова</div>
+                                <div class="activity-time">Записалась 16.01.2025 • Ожидает оплаты ⏳</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Дмитрий Иванов</div>
+                                <div class="activity-time">Записался 14.01.2025 • Оплачено ✅</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Marketing Section -->
+            <div class="content-section" id="marketing">
+                <div class="content-area">
+                    <h2>📢 Маркетинговые кампании</h2>
+                    <div class="cards-grid" style="margin-bottom: 2rem;">
+                        <div class="metric-card">
+                            <h3>5</h3>
+                            <p>Активных кампаний</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>€820</h3>
+                            <p>Потрачено в месяц</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>15.2%</h3>
+                            <p>CTR</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>€41</h3>
+                            <p>Цена лида</p>
+                        </div>
+                    </div>
+                    
+                    <button class="action-btn" style="margin-bottom: 2rem;">
+                        ➕ Создать новую кампанию
+                    </button>
+                    
+                    <h3>Активные кампании</h3>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">📱</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Instagram Stories</div>
+                                <div class="activity-time">Бюджет: €200/день • CTR: 18.5% 🟢</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">👥</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Facebook Ads</div>
+                                <div class="activity-time">Бюджет: €150/день • CTR: 12.3% 🟡</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">🔍</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Google Ads</div>
+                                <div class="activity-time">Бюджет: €300/день • CTR: 8.9% 🔴</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Website Editor Section -->
+            <div class="content-section" id="website">
+                <div class="content-area">
+                    <h2>🌐 Редактор сайта</h2>
+                    <div class="form-group">
+                        <label class="form-label">Заголовок главной страницы</label>
+                        <input type="text" class="form-input" value="Станьте UX/UI дизайнером за 12 недель" placeholder="Основной заголовок">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Подзаголовок</label>
+                        <textarea class="form-input" placeholder="Описание курса">Изучите современный UX/UI дизайн с нуля. Практические проекты, реальные кейсы, гарантированное трудоустройство.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Цена на сайте</label>
+                        <input type="text" class="form-input" value="€199" placeholder="€199">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Текст кнопки</label>
+                        <input type="text" class="form-input" value="Записаться на курс" placeholder="Записаться сейчас">
+                    </div>
+                    <button class="action-btn" style="margin-top: 1rem;">
+                        🚀 Опубликовать изменения
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div class="content-section" id="analytics">
+                <div class="content-area">
+                    <h2>📈 Аналитика</h2>
+                    <div class="cards-grid" style="margin-bottom: 2rem;">
+                        <div class="metric-card">
+                            <h3>1,250</h3>
+                            <p>Посетители за неделю</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>89</h3>
+                            <p>Лиды</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>23</h3>
+                            <p>Конверсии</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>25.8%</h3>
+                            <p>Конверсия лид → клиент</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-placeholder">
+                        📊 Здесь будет график посещаемости и конверсий
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automation Section -->
+            <div class="content-section" id="automation">
+                <div class="content-area">
+                    <h2>🤖 Автоматизация</h2>
+                    <div class="cards-grid" style="margin-bottom: 2rem;">
+                        <div class="metric-card">
+                            <h3>47</h3>
+                            <p>Постов опубликовано</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>3</h3>
+                            <p>Активных бота</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>12</h3>
+                            <p>Email отправлено</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>98.5%</h3>
+                            <p>Аптайм</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Настройки Telegram бота</h3>
+                    <div class="form-group">
+                        <label class="form-label">Bot Token</label>
+                        <input type="password" class="form-input" placeholder="Токен от @BotFather">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Chat ID</label>
+                        <input type="text" class="form-input" placeholder="Ваш Chat ID">
+                    </div>
+                    <button class="action-btn" style="margin-top: 1rem;">
+                        🔧 Сохранить настройки
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interviews Section -->
+            <div class="content-section" id="interviews">
+                <div class="content-area">
+                    <h2>📝 Интервью и отзывы</h2>
+                    <div class="cards-grid" style="margin-bottom: 2rem;">
+                        <div class="metric-card">
+                            <h3>12</h3>
+                            <p>Проведено интервью</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>4.8</h3>
+                            <p>Средний рейтинг</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>8</h3>
+                            <p>Положительных отзывов</p>
+                        </div>
+                        <div class="metric-card">
+                            <h3>100%</h3>
+                            <p>Рекомендуют курс</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Последние отзывы</h3>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">⭐</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Анна К. - 5/5 звезд</div>
+                                <div class="activity-time">"Отличный курс! Получила работу через 2 недели после окончания"</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">⭐</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Сергей М. - 5/5 звезд</div>
+                                <div class="activity-time">"Преподаватель объясняет очень понятно, много практики"</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="content-section" id="settings">
+                <div class="content-area">
+                    <h2>⚙️ Настройки системы</h2>
+                    <div class="form-group">
+                        <label class="form-label">Email для уведомлений</label>
+                        <input type="email" class="form-input" value="admin@uxui-course.com" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Часовой пояс</label>
+                        <select class="form-input">
+                            <option>Europe/Moscow (UTC+3)</option>
+                            <option>Europe/London (UTC+0)</option>
+                            <option>Europe/Berlin (UTC+1)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Валюта</label>
+                        <select class="form-input">
+                            <option>EUR (€)</option>
+                            <option>USD ($)</option>
+                            <option>RUB (₽)</option>
+                        </select>
+                    </div>
+                    <button class="action-btn" style="margin-top: 1rem;">
+                        💾 Сохранить настройки
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        function switchTab(tabName) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked nav item
+            event.target.closest('.nav-item').classList.add('active');
+            
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected content section
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Mobile sidebar toggle
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // Simulate real-time updates
+        function updateStats() {
+            const stats = [
+                { id: 'students', min: 20, max: 30 },
+                { id: 'revenue', min: 3500, max: 5000 },
+                { id: 'conversion', min: 12, max: 18 },
+                { id: 'visitors', min: 1000, max: 1500 }
+            ];
+            
+            stats.forEach(stat => {
+                const value = Math.floor(Math.random() * (stat.max - stat.min) + stat.min);
+                // Update values in real elements if needed
+            });
+        }
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click animations to cards
+            document.querySelectorAll('.metric-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Add fade-in animations
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.metric-card').forEach(card => {
+                observer.observe(card);
+            });
+
+            // Update stats every 30 seconds
+            setInterval(updateStats, 30000);
+        });
+
+        // Add mobile menu button
+        if (window.innerWidth <= 768) {
+            const header = document.querySelector('.header');
+            const menuBtn = document.createElement('button');
+            menuBtn.innerHTML = '☰';
+            menuBtn.style.cssText = `
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+                background: #667eea;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 0.5rem;
+                font-size: 1.2rem;
+                cursor: pointer;
+            `;
+            menuBtn.onclick = toggleSidebar;
+            document.body.appendChild(menuBtn);
+        }
+    </script>
+</body>
+</html> 
