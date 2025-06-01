@@ -6,6 +6,7 @@
 !dashboard.html
 !README.md
 !.gitignore
+!.nojekyll
 
 # Исключения для папок (если нужны будут)
 # !assets/
