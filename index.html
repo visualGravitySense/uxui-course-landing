@@ -1573,15 +1573,18 @@
     <header class="header">
         <nav class="nav">
             <div class="logo">GammaIntelligence</div>
-            
             <!-- Компонент рейтинга -->
             <div class="rating-component">
                 <span class="rating-star">★</span>
                 <span class="rating-score">4.9</span>
-                <span class="rating-count">(89 отзывов)</span>
+                <span class="rating-count" data-i18n="header.reviews">(89 отзывов)</span>
             </div>
-            
-            <a href="#enroll" class="cta-button">▲ Join Course</a>
+            <a href="#enroll" class="cta-button" onclick="scrollToEnrollment()" data-i18n="header.join">▲ Join Course</a>
+            <div class="lang-switcher" style="margin-left: 2rem;">
+                <button onclick="setLanguage('ru')">RU</button> |
+                <button onclick="setLanguage('en')">EN</button> |
+                <button onclick="setLanguage('et')">ET</button>
+            </div>
         </nav>
     </header>
 
@@ -1597,15 +1600,12 @@
         
         <div class="hero-content">
             <div class="hero-badge">
-                <span class="badge-text">✨ НОВЫЙ КУРС 2025</span>
+                <span class="badge-text" data-i18n="hero.badge">✨ НОВЫЙ КУРС 2025</span>
             </div>
             
-            <h1>
-                UX/UI Дизайн &<br>
-                Прототипирование в Figma
-            </h1>
+            <h1 data-i18n="hero.title">UX/UI Дизайн &<br>Прототипирование в Figma</h1>
             
-            <p class="subtitle">
+            <p class="subtitle" data-i18n="hero.subtitle">
                 Интенсивный курс для создания пользовательских интерфейсов. 
                 От исследований до готового продукта за 3 месяца. 
                 <span class="highlight-text">252 академических часа</span> качественного обучения.
@@ -1613,7 +1613,7 @@
             
             <!-- Pixel status bar with dynamic content -->
             <div class="pixel-status-bar">
-                <span id="statusText">ЗАГРУЗКА КУРСА...</span>
+                <span id="statusText" data-i18n="hero.status">ЗАГРУЗКА КУРСА...</span>
                 <div class="loading-bar">
                     <div class="loading-progress"></div>
                 </div>
@@ -1642,24 +1642,24 @@
                 <div class="highlight-badge">
                     <div class="badge-icon">📅</div>
                     <div class="badge-content">
-                        <div class="badge-title">СТАРТ КУРСА</div>
-                        <div class="badge-value">28 АПРЕЛЯ</div>
+                        <div class="badge-title" data-i18n="hero.start">СТАРТ КУРСА</div>
+                        <div class="badge-value" data-i18n="hero.start_date">30 июня</div>
                     </div>
                 </div>
                 
                 <div class="highlight-badge">
                     <div class="badge-icon">👥</div>
                     <div class="badge-content">
-                        <div class="badge-title">ГРУППЫ</div>
-                        <div class="badge-value">6-10 ЧЕЛОВЕК</div>
+                        <div class="badge-title" data-i18n="hero.groups">ГРУППЫ</div>
+                        <div class="badge-value" data-i18n="hero.groups_size">6-10 ЧЕЛОВЕК</div>
                     </div>
                 </div>
                 
                 <div class="highlight-badge">
                     <div class="badge-icon">🎯</div>
                     <div class="badge-content">
-                        <div class="badge-title">ФОРМАТ</div>
-                        <div class="badge-value">ОЧНО + ПРАКТИКА</div>
+                        <div class="badge-title" data-i18n="hero.format">ФОРМАТ</div>
+                        <div class="badge-value" data-i18n="hero.format_type">ОЧНО + ПРАКТИКА</div>
                     </div>
                 </div>
             </div>
@@ -1668,15 +1668,15 @@
             <div class="trust-indicators">
                 <div class="trust-item">
                     <span class="trust-number">252</span>
-                    <span class="trust-text">ЧАСА ОБУЧЕНИЯ</span>
+                    <span class="trust-text" data-i18n="hero.hours">ЧАСА ОБУЧЕНИЯ</span>
                 </div>
                 <div class="trust-item">
                     <span class="trust-number">8</span>
-                    <span class="trust-text">МОДУЛЕЙ</span>
+                    <span class="trust-text" data-i18n="hero.modules">МОДУЛЕЙ</span>
                 </div>
                 <div class="trust-item">
                     <span class="trust-number">100%</span>
-                    <span class="trust-text">ПРАКТИКИ</span>
+                    <span class="trust-text" data-i18n="hero.practice">ПРАКТИКИ</span>
                 </div>
             </div>
         </div>
@@ -1685,7 +1685,7 @@
     <!-- Программа курса -->
     <section class="program-section" id="course-info">
         <div class="program-content">
-            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-purple);">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-purple);" data-i18n="program.title">
                 ▲ ПРОГРАММА КУРСА
             </h2>
             
@@ -1693,90 +1693,217 @@
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">01</span>
-                        <h3>Введение в UX/UI дизайн</h3>
-                        <div class="module-hours">4 часа</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- UX/UI: Brain icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="14" cy="14" r="13" fill="url(#brainGradient1)"/>
+                                <path d="M9 14c0-2 2-4 5-4s5 2 5 4-2 4-5 4-5-2-5-4z" fill="#fff"/>
+                                <defs>
+                                    <radialGradient id="brainGradient1" cx="0" cy="0" r="1" gradientTransform="translate(14 14) scale(13)" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#E0F6FF"/>
+                                        <stop offset="1" stop-color="#FF00FF"/>
+                                    </radialGradient>
+                                </defs>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module1.title">Введение в UX/UI дизайн</h3>
+                        <div class="module-hours" data-i18n="program.module1.hours">4 часа</div>
                     </div>
-                    <p>Основные понятия UX и UI. Различие между ними и их роли в процессе разработки.</p>
+                    <p data-i18n="program.module1.desc">Основные понятия UX и UI. Различие между ними и их роли в процессе разработки.</p>
                 </div>
 
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">02</span>
-                        <h3>Основы работы в Figma</h3>
-                        <div class="module-hours">12 часов</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- Figma icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="24" height="24" rx="6" fill="url(#figmaGradient)"/>
+                                <circle cx="9" cy="9" r="4" fill="#FF7262"/>
+                                <circle cx="19" cy="9" r="4" fill="#A259FF"/>
+                                <circle cx="9" cy="19" r="4" fill="#1ABCFE"/>
+                                <circle cx="19" cy="19" r="4" fill="#0ACF83"/>
+                                <defs>
+                                    <linearGradient id="figmaGradient" x1="2" y1="2" x2="26" y2="26" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#E0F6FF"/>
+                                        <stop offset="1" stop-color="#FF00FF"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module2.title">Основы работы в Figma</h3>
+                        <div class="module-hours" data-i18n="program.module2.hours">12 часов</div>
                     </div>
-                    <p>Рабочее пространство и инструменты. Простые формы. Векторные инструменты. Основы работы с изображениями. Маски. Иерархия в документе. Базовая работа с текстом.</p>
+                    <p data-i18n="program.module2.desc">Рабочее пространство и инструменты. Простые формы. Векторные инструменты. Основы работы с изображениями. Маски. Иерархия в документе. Базовая работа с текстом.</p>
                 </div>
 
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">03</span>
-                        <h3>Прототип лендинга</h3>
-                        <div class="module-hours">16 часов</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- Portfolio icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="8" width="20" height="12" rx="4" fill="#FFEBCD"/>
+                                <rect x="8" y="4" width="12" height="6" rx="2" fill="#8B5CF6"/>
+                                <rect x="10" y="12" width="8" height="4" rx="1" fill="#FF6B9D"/>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module3.title">Прототип лендинга</h3>
+                        <div class="module-hours" data-i18n="program.module3.hours">16 часов</div>
                     </div>
-                    <p>Основы дизайна на базе Figma. Композиция в дизайне. Типографика и читабельность. Теория цвета в UI дизайне, работа с палитрами. Сетки, интервалы и макет.</p>
+                    <p data-i18n="program.module3.desc">Основы дизайна на базе Figma. Композиция в дизайне. Типографика и читабельность. Теория цвета в UI дизайне, работа с палитрами. Сетки, интервалы и макет.</p>
                 </div>
 
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">04</span>
-                        <h3>HTML/CSS, основы верстки</h3>
-                        <div class="module-hours">22 часа</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- Laptop icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="8" width="20" height="10" rx="2" fill="#E6E6FA"/>
+                                <rect x="2" y="20" width="24" height="3" rx="1.5" fill="#00FFFF"/>
+                                <rect x="8" y="10" width="12" height="6" rx="1" fill="#F0FFF0"/>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module4.title">HTML/CSS, основы верстки</h3>
+                        <div class="module-hours" data-i18n="program.module4.hours">22 часа</div>
                     </div>
-                    <p>Стандарт HTML5. Основные теги. Отображение страницы в браузере. DOM model. Основные инструменты веб-разработчика. IDE (Visual Studio Code). CSS CSS3.</p>
+                    <p data-i18n="program.module4.desc">Стандарт HTML5. Основные теги. Отображение страницы в браузере. DOM model. Основные инструменты веб-разработчика. IDE (Visual Studio Code). CSS CSS3.</p>
                 </div>
 
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">05</span>
-                        <h3>UX исследования. Miro/FigJam</h3>
-                        <div class="module-hours">16 часов</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- Team icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="9" cy="14" r="4" fill="#10B981"/>
+                                <circle cx="19" cy="14" r="4" fill="#FF6B35"/>
+                                <rect x="4" y="20" width="20" height="4" rx="2" fill="#E0F6FF"/>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module5.title">UX исследования. Miro/FigJam</h3>
+                        <div class="module-hours" data-i18n="program.module5.hours">16 часов</div>
                     </div>
-                    <p>Продуктовая гипотеза и исследования. Создание гипотезы. Исследование пользователя и конкурентные исследования. Карта эмпатии. Создание персон. Customer Journey Map.</p>
+                    <p data-i18n="program.module5.desc">Продуктовая гипотеза и исследования. Создание гипотезы. Исследование пользователя и конкурентные исследования. Карта эмпатии. Создание персон. Customer Journey Map.</p>
                 </div>
 
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">06</span>
-                        <h3>UX дизайн</h3>
-                        <div class="module-hours">16 часов</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- Brain icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="14" cy="14" r="13" fill="url(#brainGradient2)"/>
+                                <path d="M9 14c0-2 2-4 5-4s5 2 5 4-2 4-5 4-5-2-5-4z" fill="#fff"/>
+                                <defs>
+                                    <radialGradient id="brainGradient2" cx="0" cy="0" r="1" gradientTransform="translate(14 14) scale(13)" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#F0FFF0"/>
+                                        <stop offset="1" stop-color="#8B5CF6"/>
+                                    </radialGradient>
+                                </defs>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module6.title">UX дизайн</h3>
+                        <div class="module-hours" data-i18n="program.module6.hours">16 часов</div>
                     </div>
-                    <p>Wireframing. Пользовательские тесты. Анализ пользовательских тестов. Итерации сеток.</p>
+                    <p data-i18n="program.module6.desc">Wireframing. Пользовательские тесты. Анализ пользовательских тестов. Итерации сеток.</p>
                 </div>
 
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">07</span>
-                        <h3>Разработка прототипа сайта</h3>
-                        <div class="module-hours">32 часа</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- App prototype icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="7" y="5" width="14" height="18" rx="3" fill="#E6E6FA"/>
+                                <rect x="10" y="8" width="8" height="8" rx="2" fill="#FF6B9D"/>
+                                <rect x="12" y="18" width="4" height="2" rx="1" fill="#00FF41"/>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module7.title">Разработка прототипа приложения</h3>
+                        <div class="module-hours" data-i18n="program.module7.hours">32 часа</div>
                     </div>
-                    <p>Продвинутые методы Figma. Auto Layout. Создание компонентов. Стили в Figma. Плагины Figma. Кликабельный прототип. Юзабилити-тестирование.</p>
+                    <p data-i18n="program.module7.desc">Продвинутые методы Figma. Auto Layout. Создание компонентов. Стили в Figma. Плагины Figma. Кликабельный прототип. Юзабилити-тестирование.</p>
                 </div>
 
                 <div class="module-card">
                     <div class="module-header">
                         <span class="module-number">08</span>
-                        <h3>Подготовка для разработки</h3>
-                        <div class="module-hours">8 часов</div>
+                        <span class="pixel-icon" style="margin-right: 0.7rem; vertical-align: middle;">
+                            <!-- Certificate icon -->
+                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="4" y="8" width="20" height="12" rx="4" fill="#F0F4EC"/>
+                                <circle cx="14" cy="14" r="4" fill="#F59E0B"/>
+                                <rect x="10" y="18" width="8" height="2" rx="1" fill="#00FFFF"/>
+                            </svg>
+                        </span>
+                        <h3 style="display: inline-block; vertical-align: middle;" data-i18n="program.module8.title">Подготовка для разработки</h3>
+                        <div class="module-hours" data-i18n="program.module8.hours">8 часов</div>
                     </div>
-                    <p>Создание адаптивов. Разработка UI-kit. Подготовка прототипа для передачи в разработку.</p>
+                    <p data-i18n="program.module8.desc">Создание адаптивов. Разработка UI-kit. Подготовка прототипа для передачи в разработку.</p>
                 </div>
             </div>
 
+            <!-- Работы студентов -->
+            <section class="student-works-section" style="margin: 4rem 0;">
+                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 1.1rem; text-align: center; margin-bottom: 2.5rem; color: var(--accent-purple); letter-spacing: 0.04em;" data-i18n="program.works.title">
+                    ▲ РАБОТЫ СТУДЕНТОВ
+                </h3>
+                <div class="student-works-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto;">
+                    <div class="student-work-card" style="background: rgba(255,255,255,0.95); border-radius: 24px; border: 2px solid var(--accent-mint); box-shadow: 0 8px 32px rgba(0,255,255,0.08); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s;">
+                        <img src="dashboard-1.png" alt="CRM Dashboard UI" style="width: 100%; display: block; border-bottom: 1px solid var(--pixel-cyan);">
+                        <div style="padding: 1.2rem; text-align: center;">
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--accent-purple);">CRM Dashboard UI</span>
+                        </div>
+                    </div>
+                    <div class="student-work-card" style="background: rgba(255,255,255,0.95); border-radius: 24px; border: 2px solid var(--accent-mint); box-shadow: 0 8px 32px rgba(0,255,255,0.08); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s;">
+                        <img src="dashboard-2.png" alt="Analytics" style="width: 100%; display: block; border-bottom: 1px solid var(--pixel-cyan);">
+                        <div style="padding: 1.2rem; text-align: center;">
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--accent-purple);">Analytics</span>
+                        </div>
+                    </div>
+                    <div class="student-work-card" style="background: rgba(255,255,255,0.95); border-radius: 24px; border: 2px solid var(--accent-mint); box-shadow: 0 8px 32px rgba(0,255,255,0.08); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s;">
+                        <img src="profile-1.png" alt="User Profile" style="width: 100%; display: block; border-bottom: 1px solid var(--pixel-cyan);">
+                        <div style="padding: 1.2rem; text-align: center;">
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--accent-purple);">User Profile</span>
+                        </div>
+                    </div>
+                    <div class="student-work-card" style="background: rgba(255,255,255,0.95); border-radius: 24px; border: 2px solid var(--accent-mint); box-shadow: 0 8px 32px rgba(0,255,255,0.08); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s;">
+                        <img src="salon-1.png" alt="Beauty Salong Landing" style="width: 100%; display: block; border-bottom: 1px solid var(--pixel-cyan);">
+                        <div style="padding: 1.2rem; text-align: center;">
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--accent-purple);">Beauty Salong Landing</span>
+                        </div>
+                    </div>
+                    <div class="student-work-card" style="background: rgba(255,255,255,0.95); border-radius: 24px; border: 2px solid var(--accent-mint); box-shadow: 0 8px 32px rgba(0,255,255,0.08); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s;">
+                        <img src="bmw-1.png" alt="BMW UI Concept" style="width: 100%; display: block; border-bottom: 1px solid var(--pixel-cyan);">
+                        <div style="padding: 1.2rem; text-align: center;">
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--accent-purple);">BMW UI Concept</span>
+                        </div>
+                    </div>
+                    <div class="student-work-card" style="background: rgba(255,255,255,0.95); border-radius: 24px; border: 2px solid var(--accent-mint); box-shadow: 0 8px 32px rgba(0,255,255,0.08); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s;">
+                        <img src="water-app-1.png" alt="Water Tracker App" style="width: 100%; display: block; border-bottom: 1px solid var(--pixel-cyan);">
+                        <div style="padding: 1.2rem; text-align: center;">
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--accent-purple);">Water Tracker App</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Результаты обучения -->
             <div class="learning-results">
-                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 1rem; margin-bottom: 2rem; text-align: center; color: var(--accent-mint);">
+                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 1rem; margin-bottom: 2rem; text-align: center; color: var(--accent-mint);" data-i18n="program.results.title">
                     ▲ РЕЗУЛЬТАТ ОБУЧЕНИЯ
                 </h3>
                 <div class="results-grid">
-                    <div class="result-item">✓ Владеют умением проводить исследования пользователей</div>
-                    <div class="result-item">✓ Создают пользовательские сценарии в Miro</div>
-                    <div class="result-item">✓ Умеют создавать wireframes и прототипы</div>
-                    <div class="result-item">✓ Понимают принципы графического дизайна</div>
-                    <div class="result-item">✓ Создают дизайн интерфейса в Figma</div>
-                    <div class="result-item">✓ Создают статические веб-страницы с HTML5/CSS3</div>
-                    <div class="result-item">✓ Знают принципы адаптивного дизайна</div>
-                    <div class="result-item">✓ Умеют создавать интерфейсы для разных устройств</div>
+                    <div class="result-item" data-i18n="program.results.1">✓ Владеют умением проводить исследования пользователей</div>
+                    <div class="result-item" data-i18n="program.results.2">✓ Создают пользовательские сценарии в Miro</div>
+                    <div class="result-item" data-i18n="program.results.3">✓ Умеют создавать wireframes и прототипы</div>
+                    <div class="result-item" data-i18n="program.results.4">✓ Понимают принципы графического дизайна</div>
+                    <div class="result-item" data-i18n="program.results.5">✓ Создают дизайн интерфейса в Figma</div>
+                    <div class="result-item" data-i18n="program.results.6">✓ Создают статические веб-страницы с HTML5/CSS3</div>
+                    <div class="result-item" data-i18n="program.results.7">✓ Знают принципы адаптивного дизайна</div>
+                    <div class="result-item" data-i18n="program.results.8">✓ Умеют создавать интерфейсы для разных устройств</div>
                 </div>
             </div>
         </div>
@@ -1787,30 +1914,30 @@
         <div class="requirements-content">
             <div class="requirements-grid">
                 <div class="req-card">
-                    <h3>📋 Требования</h3>
+                    <h3 data-i18n="requirements.title">📋 Требования</h3>
                     <ul>
-                        <li>Уверенный пользователь ПК</li>
-                        <li>Желательно наличие собственного ноутбука (Windows/Mac, ОЗУ 8GB, экран >13.3")</li>
-                        <li>При необходимости на время обучения выдается ноутбук</li>
+                        <li data-i18n="requirements.1">Уверенный пользователь ПК</li>
+                        <li data-i18n="requirements.2">Желательно наличие собственного ноутбука (Windows/Mac, ОЗУ 8GB, экран >13.3")</li>
+                        <li data-i18n="requirements.3">При необходимости на время обучения выдается ноутбук</li>
                     </ul>
                 </div>
 
                 <div class="req-card">
-                    <h3>🎯 Методы обучения</h3>
+                    <h3 data-i18n="methods.title">🎯 Методы обучения</h3>
                     <ul>
-                        <li>126 ак.ч. аудиторных занятий</li>
-                        <li>126 ак.ч. самостоятельной работы</li>
-                        <li>Практические занятия: 8 ак.ч.</li>
-                        <li>Семинары: 8 ак.ч.</li>
+                        <li data-i18n="methods.1">126 ак.ч. аудиторных занятий</li>
+                        <li data-i18n="methods.2">126 ак.ч. самостоятельной работы</li>
+                        <li data-i18n="methods.3">Практические занятия: 8 ак.ч.</li>
+                        <li data-i18n="methods.4">Семинары: 8 ак.ч.</li>
                     </ul>
                 </div>
 
                 <div class="req-card">
-                    <h3>✅ Условия окончания</h3>
+                    <h3 data-i18n="completion.title">✅ Условия окончания</h3>
                     <ul>
-                        <li>Результаты оцениваются на основе практических работ</li>
-                        <li>Для получения сертификата необходимо получить зачет 75% домашних работ</li>
-                        <li>При успешном выполнении работы получают оценку "зачет"</li>
+                        <li data-i18n="completion.1">Результаты оцениваются на основе практических работ</li>
+                        <li data-i18n="completion.2">Для получения сертификата необходимо получить зачет 75% домашних работ</li>
+                        <li data-i18n="completion.3">При успешном выполнении работы получают оценку "зачет"</li>
                     </ul>
                 </div>
             </div>
@@ -1820,32 +1947,54 @@
     <!-- Преподаватели -->
     <section class="teachers-section">
         <div class="teachers-content">
-            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-rose);">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-rose);" data-i18n="teachers.title">
                 ▲ ПРЕПОДАВАТЕЛИ
             </h2>
             
             <div class="teachers-grid">
                 <div class="teacher-card">
-                    <div class="teacher-avatar">ДГ</div>
-                    <h3>Дмитрий Горнаков</h3>
-                    <div class="teacher-role">UX/UI Designer & Mentor</div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 2.5rem; margin-bottom: 1.5rem;">
+                        <div class="teacher-avatar">ДГ</div>
+                        <a href="https://www.linkedin.com/in/dmitri-gornakov/" target="_blank" rel="noopener" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                            <span style="display: inline-block; background: linear-gradient(135deg, var(--pixel-cyan), var(--pixel-magenta), var(--pixel-yellow)); border-radius: 14px; box-shadow: 0 0 16px var(--pixel-cyan), 0 0 6px var(--pixel-magenta); padding: 0.4rem; border: 2px solid var(--pixel-green); animation: pixel-float 2.5s ease-in-out infinite 1.2s;">
+                                <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="48" height="48" rx="12" fill="#fff"/>
+                                    <path d="M36 36h-5.1v-7.2c0-1.7-0.6-2.8-2.1-2.8-1.1 0-1.7 0.7-2 1.4-0.1 0.3-0.1 0.7-0.1 1.1V36H21V24.5h4.9v1.6c0.6-1 1.7-2.3 4.1-2.3 3 0 5 2 5 6.2V36zM14.5 22.9c-1.6 0-2.7-1.1-2.7-2.5 0-1.4 1.1-2.5 2.7-2.5s2.7 1.1 2.7 2.5c0 1.4-1.1 2.5-2.7 2.5zM17 36h-5V24.5h5V36z" fill="#0A66C2"/>
+                                </svg>
+                            </span>
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--pixel-magenta); text-shadow: 0 0 6px var(--pixel-cyan); margin-top: 0.3rem;">LinkedIn</span>
+                        </a>
+                    </div>
+                    <h3 data-i18n="teachers.dg.name">Дмитрий Горнаков</h3>
+                    <div class="teacher-role" data-i18n="teachers.dg.role">UX/UI Designer & Mentor</div>
                     <ul class="teacher-info">
-                        <li><strong>Опыт:</strong> свыше 7 лет в графическом дизайне</li>
-                        <li><strong>Специализация:</strong> графический дизайн, дизайн интерфейсов</li>
-                        <li><strong>Преподавание:</strong> свыше 10 лет опыта</li>
-                        <li><strong>Образование:</strong> Estonian Music Academy (2008)</li>
+                        <li><strong data-i18n="teachers.experience">Опыт:</strong> <span data-i18n="teachers.dg.experience">свыше 7 лет в графическом дизайне</span></li>
+                        <li><strong data-i18n="teachers.specialization">Специализация:</strong> <span data-i18n="teachers.dg.specialization">графический дизайн, дизайн интерфейсов</span></li>
+                        <li><strong data-i18n="teachers.teaching">Преподавание:</strong> <span data-i18n="teachers.dg.teaching">свыше 10 лет опыта</span></li>
+                        <li><strong data-i18n="teachers.education">Образование:</strong> <span data-i18n="teachers.dg.education">Estonian Music Academy (2008)</span></li>
                     </ul>
                 </div>
 
                 <div class="teacher-card">
-                    <div class="teacher-avatar">РК</div>
-                    <h3>Роман Кутселепа</h3>
-                    <div class="teacher-role">Frontend Developer & Educator</div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 2.5rem; margin-bottom: 1.5rem;">
+                        <div class="teacher-avatar">РК</div>
+                        <a href="https://www.linkedin.com/in/roman-kutselepa-951793102/" target="_blank" rel="noopener" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                            <span style="display: inline-block; background: linear-gradient(135deg, var(--pixel-cyan), var(--pixel-magenta), var(--pixel-yellow)); border-radius: 14px; box-shadow: 0 0 16px var(--pixel-cyan), 0 0 6px var(--pixel-magenta); padding: 0.4rem; border: 2px solid var(--pixel-green); animation: pixel-float 2.5s ease-in-out infinite;">
+                                <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="48" height="48" rx="12" fill="#fff"/>
+                                    <path d="M36 36h-5.1v-7.2c0-1.7-0.6-2.8-2.1-2.8-1.1 0-1.7 0.7-2 1.4-0.1 0.3-0.1 0.7-0.1 1.1V36H21V24.5h4.9v1.6c0.6-1 1.7-2.3 4.1-2.3 3 0 5 2 5 6.2V36zM14.5 22.9c-1.6 0-2.7-1.1-2.7-2.5 0-1.4 1.1-2.5 2.7-2.5s2.7 1.1 2.7 2.5c0 1.4-1.1 2.5-2.7 2.5zM17 36h-5V24.5h5V36z" fill="#0A66C2"/>
+                                </svg>
+                            </span>
+                            <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--pixel-cyan); text-shadow: 0 0 6px var(--pixel-magenta); margin-top: 0.3rem;">LinkedIn</span>
+                        </a>
+                    </div>
+                    <h3 data-i18n="teachers.rk.name">Роман Кутселепа</h3>
+                    <div class="teacher-role" data-i18n="teachers.rk.role">Frontend Developer & Educator</div>
                     <ul class="teacher-info">
-                        <li><strong>Опыт:</strong> свыше 5 лет в разработке ПО</li>
-                        <li><strong>Специализация:</strong> веб-дизайн, JavaScript, эффективное использование ПО</li>
-                        <li><strong>Преподавание:</strong> свыше 5 лет в обучении персонала</li>
-                        <li><strong>Образование:</strong> Anglia Ruskin University (2010, Англия)</li>
+                        <li><strong data-i18n="teachers.experience">Опыт:</strong> <span data-i18n="teachers.rk.experience">свыше 5 лет в разработке ПО</span></li>
+                        <li><strong data-i18n="teachers.specialization">Специализация:</strong> <span data-i18n="teachers.rk.specialization">веб-дизайн, JavaScript, эффективное использование ПО</span></li>
+                        <li><strong data-i18n="teachers.teaching">Преподавание:</strong> <span data-i18n="teachers.rk.teaching">свыше 5 лет в обучении персонала</span></li>
+                        <li><strong data-i18n="teachers.education">Образование:</strong> <span data-i18n="teachers.rk.education">Anglia Ruskin University (2010, Англия)</span></li>
                     </ul>
                 </div>
             </div>
@@ -1855,72 +2004,72 @@
     <!-- Даты и запись -->
     <section class="enrollment-section" id="enrollment">
         <div class="enrollment-content">
-            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-gold);">
+            <h2 style="font-family: 'Press Start 2P', monospace; font-size: 1.3rem; text-align: center; margin-bottom: 3rem; color: var(--accent-gold);" data-i18n="enroll.title">
                 ▲ ЗАПИСЬ НА КУРС
             </h2>
 
             <div class="course-dates">
-                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 2rem; text-align: center; color: var(--accent-purple);">
+                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 2rem; text-align: center; color: var(--accent-purple);" data-i18n="enroll.dates_title">
                     Время проведения курсов:
                 </h3>
                 <div class="dates-grid">
                     <div class="date-card">
-                        <div class="date-period">28.04.2025 - 28.07.2025</div>
-                        <div class="date-schedule">Пн, Ср, Пт | 17:45 - 21:00</div>
+                        <div class="date-period">30.06.2025 - 30.09.2025</div>
+                        <div class="date-schedule">Mo, We, Fr | 17:45 - 21:00</div>
                     </div>
-                    <div class="date-card">
-                        <div class="date-period">07.05.2025 - 07.08.2025</div>
-                        <div class="date-schedule">Пн, Ср, Пт | 17:45 - 21:00</div>
-                    </div>
-                    <div class="date-card">
-                        <div class="date-period">26.05.2025 - 26.08.2025</div>
-                        <div class="date-schedule">Пн, Ср, Пт | 17:45 - 21:00</div>
-                    </div>
+                    <!-- <div class="date-card">
+                        <div class="date-period"></div>
+                        <div class="date-schedule"></div>
+                    </div> -->
+                    <!-- <div class="date-card">
+                        <div class="date-period"></div>
+                        <div class="date-schedule"></div>
+                    </div> -->
                 </div>
             </div>
 
             <div class="pricing-info">
                 <div class="price-card">
-                    <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;">СТОИМОСТЬ КУРСА</h3>
+                    <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;" data-i18n="enroll.price_title">СТОИМОСТЬ КУРСА</h3>
                     <div class="price">€2008.19</div>
-                    <div class="price-note">+ НСО</div>
+                    <div class="price-note" data-i18n="enroll.price_note">+ НСО</div>
                     <div class="course-details">
-                        <div class="detail-item">📍 <strong>Адрес:</strong> Tartu mnt. 18, Tallinn</div>
-                        <div class="detail-item">👥 <strong>Формат:</strong> Аудиторный, группы 6-10 человек</div>
-                        <div class="detail-item">🗣️ <strong>Язык:</strong> Русский</div>
-                        <div class="detail-item">💻 <strong>Техника:</strong> При необходимости выдается ноутбук</div>
+                        <div class="detail-item" data-i18n="enroll.address">📍 <strong>Адрес:</strong> Tartu mnt. 18, Tallinn</div>
+                        <div class="detail-item" data-i18n="enroll.format">👥 <strong>Формат:</strong> Аудиторный, группы 6-10 человек</div>
+                        <div class="detail-item" data-i18n="enroll.language">🗣️ <strong>Язык:</strong> Русский</div>
+                        <div class="detail-item" data-i18n="enroll.tech">💻 <strong>Техника:</strong> При необходимости выдается ноутбук</div>
                     </div>
                 </div>
             </div>
 
             <form class="enrollment-form" id="enrollmentForm">
-                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.8rem; text-align: center; margin-bottom: 2rem; color: var(--accent-figma);">
+                <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.8rem; text-align: center; margin-bottom: 2rem; color: var(--accent-figma);" data-i18n="enroll.form_title">
                     ОСТАВИТЬ ЗАЯВКУ НА КУРС
                 </h3>
                 
                 <div class="form-group">
-                    <input type="text" name="name" placeholder="ВАШЕ ИМЯ" required>
+                    <input type="text" name="name" placeholder="ВАШЕ ИМЯ" data-i18n-placeholder="enroll.form_name" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="EMAIL АДРЕС" required>
+                    <input type="email" name="email" placeholder="EMAIL АДРЕС" data-i18n-placeholder="enroll.form_email" required>
                 </div>
                 <div class="form-group">
-                    <input type="tel" name="phone" placeholder="ТЕЛЕФОН" required>
+                    <input type="tel" name="phone" placeholder="ТЕЛЕФОН" data-i18n-placeholder="enroll.form_phone" required>
                 </div>
                 <div class="form-group">
-                    <select name="course" required>
-                        <option value="">ВЫБЕРИТЕ ПОТОК</option>
-                        <option value="28.04.2025 - UX/UI Полный курс">28.04.2025 - 28.07.2025</option>
-                        <option value="07.05.2025 - UX/UI Полный курс">07.05.2025 - 07.08.2025</option>
-                        <option value="26.05.2025 - UX/UI Полный курс">26.05.2025 - 26.08.2025</option>
+                    <select name="course" required data-i18n-select="enroll.form_select">
+                        <option value="" data-i18n="enroll.form_select">ВЫБЕРИТЕ ПОТОК</option>
+                        <option value="30.06.2025 - UX/UI Полный курс">30.06.2025 - 30.09.2025</option>
+                        <!-- <option value="07.05.2025 - UX/UI Полный курс">07.05.2025 - 07.08.2025</option> -->
+                        <!-- <option value="26.05.2025 - UX/UI Полный курс">26.05.2025 - 26.08.2025</option> -->
                     </select>
                 </div>
                 
-                <button type="submit" class="submit-button">
+                <button type="submit" class="submit-button" data-i18n="enroll.form_submit">
                     ▲ ОТПРАВИТЬ ЗАЯВКУ
                 </button>
                 
-                <p style="margin-top: 1.5rem; font-family: 'Press Start 2P', monospace; font-size: 0.6rem; opacity: 0.8; text-align: center;">
+                <p style="margin-top: 1.5rem; font-family: 'Press Start 2P', monospace; font-size: 0.6rem; opacity: 0.8; text-align: center;" data-i18n="enroll.form_quality">
                     ♦ КАЧЕСТВЕННОЕ ОБУЧЕНИЕ ГАРАНТИРОВАНО
                 </p>
             </form>
@@ -1930,37 +2079,68 @@
     <!-- Footer -->
     <footer class="footer">
         <div style="margin-bottom: 2rem;">
-            <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; color: var(--pixel-cyan);">
+            <h3 style="font-family: 'Press Start 2P', monospace; font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; color: var(--pixel-cyan);" data-i18n="footer.title">
                 GAMMA INTELLIGENCE TRAINING CENTRE
             </h3>
             
+            <!-- LinkedIn prominent section -->
+            <div style="display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 2.5rem; align-items: center;">
+                <a href="https://www.linkedin.com/company/gamma-intelligence-training-centre/posts/?feedView=all" target="_blank" rel="noopener" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                    <span style="display: inline-block; background: linear-gradient(135deg, var(--pixel-cyan), var(--pixel-magenta), var(--pixel-yellow)); border-radius: 18px; box-shadow: 0 0 24px var(--pixel-cyan), 0 0 8px var(--pixel-magenta); padding: 0.7rem; margin-bottom: 0.7rem; border: 2px solid var(--pixel-green); animation: pixel-float 2.5s ease-in-out infinite 0.6s;">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="48" height="48" rx="12" fill="#fff"/>
+                            <path d="M36 36h-5.1v-7.2c0-1.7-0.6-2.8-2.1-2.8-1.1 0-1.7 0.7-2 1.4-0.1 0.3-0.1 0.7-0.1 1.1V36H21V24.5h4.9v1.6c0.6-1 1.7-2.3 4.1-2.3 3 0 5 2 5 6.2V36zM14.5 22.9c-1.6 0-2.7-1.1-2.7-2.5 0-1.4 1.1-2.5 2.7-2.5s2.7 1.1 2.7 2.5c0 1.4-1.1 2.5-2.7 2.5zM17 36h-5V24.5h5V36z" fill="#0A66C2"/>
+                        </svg>
+                    </span>
+                    <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--pixel-yellow); text-shadow: 0 0 8px var(--pixel-cyan);">Company</span>
+                </a>
+                <a href="https://www.linkedin.com/in/roman-kutselepa-951793102/" target="_blank" rel="noopener" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                    <span style="display: inline-block; background: linear-gradient(135deg, var(--pixel-cyan), var(--pixel-magenta), var(--pixel-yellow)); border-radius: 18px; box-shadow: 0 0 24px var(--pixel-cyan), 0 0 8px var(--pixel-magenta); padding: 0.7rem; margin-bottom: 0.7rem; border: 2px solid var(--pixel-green); animation: pixel-float 2.5s ease-in-out infinite;">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="48" height="48" rx="12" fill="#fff"/>
+                            <path d="M36 36h-5.1v-7.2c0-1.7-0.6-2.8-2.1-2.8-1.1 0-1.7 0.7-2 1.4-0.1 0.3-0.1 0.7-0.1 1.1V36H21V24.5h4.9v1.6c0.6-1 1.7-2.3 4.1-2.3 3 0 5 2 5 6.2V36zM14.5 22.9c-1.6 0-2.7-1.1-2.7-2.5 0-1.4 1.1-2.5 2.7-2.5s2.7 1.1 2.7 2.5c0 1.4-1.1 2.5-2.7 2.5zM17 36h-5V24.5h5V36z" fill="#0A66C2"/>
+                        </svg>
+                    </span>
+                    <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--pixel-cyan); text-shadow: 0 0 8px var(--pixel-magenta);">Roman</span>
+                </a>
+                <a href="https://www.linkedin.com/in/dmitri-gornakov/" target="_blank" rel="noopener" style="display: flex; flex-direction: column; align-items: center; text-decoration: none;">
+                    <span style="display: inline-block; background: linear-gradient(135deg, var(--pixel-cyan), var(--pixel-magenta), var(--pixel-yellow)); border-radius: 18px; box-shadow: 0 0 24px var(--pixel-cyan), 0 0 8px var(--pixel-magenta); padding: 0.7rem; margin-bottom: 0.7rem; border: 2px solid var(--pixel-green); animation: pixel-float 2.5s ease-in-out infinite 1.2s;">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="48" height="48" rx="12" fill="#fff"/>
+                            <path d="M36 36h-5.1v-7.2c0-1.7-0.6-2.8-2.1-2.8-1.1 0-1.7 0.7-2 1.4-0.1 0.3-0.1 0.7-0.1 1.1V36H21V24.5h4.9v1.6c0.6-1 1.7-2.3 4.1-2.3 3 0 5 2 5 6.2V36zM14.5 22.9c-1.6 0-2.7-1.1-2.7-2.5 0-1.4 1.1-2.5 2.7-2.5s2.7 1.1 2.7 2.5c0 1.4-1.1 2.5-2.7 2.5zM17 36h-5V24.5h5V36z" fill="#0A66C2"/>
+                        </svg>
+                    </span>
+                    <span style="font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--pixel-magenta); text-shadow: 0 0 8px var(--pixel-cyan);">Dmitri</span>
+                </a>
+            </div>
+            
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
                 <div>
-                    <h4 style="font-size: 0.8rem; margin-bottom: 1rem; color: var(--pixel-green);">КОНТАКТЫ:</h4>
-                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">📍 Tartu mnt. 18, Tallinn, Estonia</p>
-                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">📞 +372 555 81 521</p>
-                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">✉️ info@gammatest.net</p>
+                    <h4 style="font-size: 0.8rem; margin-bottom: 1rem; color: var(--pixel-green);" data-i18n="footer.contacts">КОНТАКТЫ:</h4>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;" data-i18n="footer.address">📍 Tartu mnt. 18, Tallinn, Estonia</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;" data-i18n="footer.phone">📞 +372 555 81 521</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;" data-i18n="footer.email">✉️ info@gammatest.net</p>
                 </div>
                 
                 <div>
-                    <h4 style="font-size: 0.8rem; margin-bottom: 1rem; color: var(--pixel-magenta);">ДОКУМЕНТЫ:</h4>
-                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">GAMMA INTELLIGENCE OÜ</p>
-                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">Рег. номер: 11122396</p>
-                    <p style="margin: 0.5rem 0; font-size: 0.8rem;">Группа программы: 0613 - Анализ и разработка ПО</p>
+                    <h4 style="font-size: 0.8rem; margin-bottom: 1rem; color: var(--pixel-magenta);" data-i18n="footer.docs">ДОКУМЕНТЫ:</h4>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;" data-i18n="footer.company">GAMMA INTELLIGENCE OÜ</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;" data-i18n="footer.reg">Рег. номер: 11122396</p>
+                    <p style="margin: 0.5rem 0; font-size: 0.8rem;" data-i18n="footer.group">Группа программы: 0613 - Анализ и разработка ПО</p>
                 </div>
             </div>
         </div>
         
         <div style="border-top: 2px solid var(--pixel-cyan); padding-top: 2rem; text-align: center;">
-            <p>&copy; 2013-2025 Gamma Intelligence | Для тех, кто создает прекрасное.</p>
-            <p style="margin-top: 1rem; opacity: 0.8;">
+            <p data-i18n="footer.copyright">&copy; 2013-2025 Gamma Intelligence | Для тех, кто создает прекрасное.</p>
+            <p style="margin-top: 1rem; opacity: 0.8;" data-i18n="footer.questions">
                 Вопросы по курсу? Пишите: <a href="mailto:info@gammatest.net" style="color: var(--pixel-yellow); text-decoration: none; font-family: 'Press Start 2P', monospace; font-size: 0.7rem;">info@gammatest.net</a>
             </p>
             <!-- Admin Dashboard Access -->
             <div style="margin-top: 2rem; opacity: 0.3; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.3'">
-                <a href="dashboard.html" style="color: var(--pixel-green); text-decoration: none; font-family: 'Press Start 2P', monospace; font-size: 0.6rem; display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--pixel-green); border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--pixel-green)'; this.style.color='#000';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--pixel-green)';">
+                <!-- <a href="dashboard.html" style="color: var(--pixel-green); text-decoration: none; font-family: 'Press Start 2P', monospace; font-size: 0.6rem; display: inline-block; padding: 0.5rem 1rem; border: 1px solid var(--pixel-green); border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='var(--pixel-green)'; this.style.color='#000';" onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--pixel-green)';">
                     🎓 DASHBOARD
-                </a>
+                </a> -->
             </div>
         </div>
     </footer>
@@ -2408,6 +2588,366 @@
                 title.style.textShadow = 'none';
             }, 100);
         }, 5000);
+
+        const translations = {
+          ru: {
+            "header.reviews": "(89 отзывов)",
+            "header.join": "▲ ЗАПИСАТЬСЯ НА КУРС",
+            "hero.title": "UX/UI Дизайн &<br>Прототипирование в Figma",
+            "hero.subtitle": "Интенсивный курс для создания пользовательских интерфейсов. От исследований до готового продукта за 3 месяца. <span class='highlight-text'>252 академических часа</span> качественного обучения.",
+            "hero.badge": "✨ НОВЫЙ КУРС 2025",
+            "hero.status": "ЗАГРУЗКА КУРСА...",
+            "hero.start": "СТАРТ КУРСА",
+            "hero.start_date": "30 июня",
+            "hero.groups": "ГРУППЫ",
+            "hero.groups_size": "6-10 ЧЕЛОВЕК",
+            "hero.format": "ФОРМАТ",
+            "hero.format_type": "ОЧНО + ПРАКТИКА",
+            "hero.hours": "ЧАСА ОБУЧЕНИЯ",
+            "hero.modules": "МОДУЛЕЙ",
+            "hero.practice": "ПРАКТИКИ",
+            "program.title": "▲ ПРОГРАММА КУРСА",
+            "program.module1.title": "Введение в UX/UI дизайн",
+            "program.module1.hours": "4 часа",
+            "program.module1.desc": "Основные понятия UX и UI. Различие между ними и их роли в процессе разработки.",
+            "program.works.title": "▲ РАБОТЫ СТУДЕНТОВ",
+            "program.results.title": "▲ РЕЗУЛЬТАТ ОБУЧЕНИЯ",
+            "program.results.1": "✓ Владеют умением проводить исследования пользователей",
+            "program.results.2": "✓ Создают пользовательские сценарии в Miro",
+            "program.results.3": "✓ Умеют создавать wireframes и прототипы",
+            "program.results.4": "✓ Понимают принципы графического дизайна",
+            "program.results.5": "✓ Создают дизайн интерфейса в Figma",
+            "program.results.6": "✓ Создают статические веб-страницы с HTML5/CSS3",
+            "program.results.7": "✓ Знают принципы адаптивного дизайна",
+            "program.results.8": "✓ Умеют создавать интерфейсы для разных устройств",
+            "requirements.title": "📋 Требования",
+            "requirements.1": "Уверенный пользователь ПК",
+            "requirements.2": "Желательно наличие собственного ноутбука (Windows/Mac, ОЗУ 8GB, экран >13.3\")",
+            "requirements.3": "При необходимости на время обучения выдается ноутбук",
+            "methods.title": "🎯 Методы обучения",
+            "methods.1": "126 ак.ч. аудиторных занятий",
+            "methods.2": "126 ак.ч. самостоятельной работы",
+            "methods.3": "Практические занятия: 8 ак.ч.",
+            "methods.4": "Семинары: 8 ак.ч.",
+            "completion.title": "✅ Условия окончания",
+            "completion.1": "Результаты оцениваются на основе практических работ",
+            "completion.2": "Для получения сертификата необходимо получить зачет 75% домашних работ",
+            "completion.3": "При успешном выполнении работы получают оценку \"зачет\"",
+            "teachers.title": "▲ ПРЕПОДАВАТЕЛИ",
+            "enroll.title": "▲ ЗАПИСЬ НА КУРС",
+            "enroll.dates_title": "Время проведения курсов:",
+            "enroll.price_title": "СТОИМОСТЬ КУРСА",
+            "enroll.price_note": "+ НСО",
+            "enroll.address": "📍 <strong>Адрес:</strong> Tartu mnt. 18, Tallinn",
+            "enroll.format": "👥 <strong>Формат:</strong> Аудиторный, группы 6-10 человек",
+            "enroll.language": "🗣️ <strong>Язык:</strong> Русский",
+            "enroll.tech": "💻 <strong>Техника:</strong> При необходимости выдается ноутбук",
+            "enroll.form_title": "ОСТАВИТЬ ЗАЯВКУ НА КУРС",
+            "enroll.form_name": "ВАШЕ ИМЯ",
+            "enroll.form_email": "EMAIL АДРЕС",
+            "enroll.form_phone": "ТЕЛЕФОН",
+            "enroll.form_select": "ВЫБЕРИТЕ ПОТОК",
+            "enroll.form_submit": "▲ ОТПРАВИТЬ ЗАЯВКУ",
+            "enroll.form_quality": "♦ КАЧЕСТВЕННОЕ ОБУЧЕНИЕ ГАРАНТИРОВАНО",
+            "footer.title": "GAMMA INTELLIGENCE TRAINING CENTRE",
+            "footer.contacts": "КОНТАКТЫ:",
+            "footer.address": "📍 Tartu mnt. 18, Tallinn, Estonia",
+            "footer.phone": "📞 +372 555 81 521",
+            "footer.email": "✉️ info@gammatest.net",
+            "footer.docs": "ДОКУМЕНТЫ:",
+            "footer.company": "GAMMA INTELLIGENCE OÜ",
+            "footer.reg": "Рег. номер: 11122396",
+            "footer.group": "Группа программы: 0613 - Анализ и разработка ПО",
+            "footer.copyright": "&copy; 2013-2025 Gamma Intelligence | Для тех, кто создает прекрасное.",
+            "footer.questions": "Вопросы по курсу? Пишите: <a href=\"mailto:info@gammatest.net\" style=\"color: var(--pixel-yellow); text-decoration: none; font-family: 'Press Start 2P', monospace; font-size: 0.7rem;\">info@gammatest.net</a>",
+            "program.module2.title": "Основы работы в Figma",
+            "program.module2.hours": "12 часов",
+            "program.module2.desc": "Рабочее пространство и инструменты. Простые формы. Векторные инструменты. Основы работы с изображениями. Маски. Иерархия в документе. Базовая работа с текстом.",
+            "program.module3.title": "Прототип лендинга",
+            "program.module3.hours": "16 часов",
+            "program.module3.desc": "Основы дизайна на базе Figma. Композиция в дизайне. Типографика и читабельность. Теория цвета в UI дизайне, работа с палитрами. Сетки, интервалы и макет.",
+            "program.module4.title": "HTML/CSS, основы верстки",
+            "program.module4.hours": "22 часа",
+            "program.module4.desc": "Стандарт HTML5. Основные теги. Отображение страницы в браузере. DOM model. Основные инструменты веб-разработчика. IDE (Visual Studio Code). CSS CSS3.",
+            "program.module5.title": "UX исследования. Miro/FigJam",
+            "program.module5.hours": "16 часов",
+            "program.module5.desc": "Продуктовая гипотеза и исследования. Создание гипотезы. Исследование пользователя и конкурентные исследования. Карта эмпатии. Создание персон. Customer Journey Map.",
+            "program.module6.title": "UX дизайн",
+            "program.module6.hours": "16 часов",
+            "program.module6.desc": "Wireframing. Пользовательские тесты. Анализ пользовательских тестов. Итерации сеток.",
+            "program.module7.title": "Разработка прототипа приложения",
+            "program.module7.hours": "32 часа",
+            "program.module7.desc": "Продвинутые методы Figma. Auto Layout. Создание компонентов. Стили в Figma. Плагины Figma. Кликабельный прототип. Юзабилити-тестирование.",
+            "program.module8.title": "Подготовка для разработки",
+            "program.module8.hours": "8 часов",
+            "program.module8.desc": "Создание адаптивов. Разработка UI-kit. Подготовка прототипа для передачи в разработку.",
+            "teachers.dg.name": "Дмитрий Горнаков",
+            "teachers.dg.role": "UX/UI Designer & Mentor",
+            "teachers.dg.experience": "свыше 7 лет в графическом дизайне",
+            "teachers.dg.specialization": "графический дизайн, дизайн интерфейсов",
+            "teachers.dg.teaching": "свыше 10 лет опыта",
+            "teachers.dg.education": "Estonian Music Academy (2008)",
+            "teachers.rk.name": "Роман Кутселепа",
+            "teachers.rk.role": "Frontend Developer & Educator",
+            "teachers.rk.experience": "свыше 5 лет в разработке ПО",
+            "teachers.rk.specialization": "веб-дизайн, JavaScript, эффективное использование ПО",
+            "teachers.rk.teaching": "свыше 5 лет в обучении персонала",
+            "teachers.rk.education": "Anglia Ruskin University (2010, Англия)",
+            "teachers.experience": "Опыт:",
+            "teachers.specialization": "Специализация:",
+            "teachers.teaching": "Преподавание:",
+            "teachers.education": "Образование:",
+            // ... остальные ключи ...
+          },
+          en: {
+            "header.reviews": "(89 reviews)",
+            "header.join": "▲ JOIN COURSE",
+            "hero.title": "UX/UI Design &<br>Prototyping in Figma",
+            "hero.subtitle": "An intensive course for creating user interfaces. From research to a finished product in 3 months. <span class='highlight-text'>252 academic hours</span> of quality training.",
+            "hero.badge": "✨ NEW COURSE 2025",
+            "hero.status": "LOADING COURSE...",
+            "hero.start": "COURSE START",
+            "hero.start_date": "June 30",
+            "hero.groups": "GROUPS",
+            "hero.groups_size": "6-10 PEOPLE",
+            "hero.format": "FORMAT",
+            "hero.format_type": "IN-PERSON + PRACTICE",
+            "hero.hours": "HOURS OF TRAINING",
+            "hero.modules": "MODULES",
+            "hero.practice": "PRACTICE",
+            "program.title": "▲ COURSE PROGRAM",
+            "program.module1.title": "Introduction to UX/UI Design",
+            "program.module1.hours": "4 hours",
+            "program.module1.desc": "Basic concepts of UX and UI. The difference between them and their roles in the development process.",
+            "program.works.title": "▲ STUDENT WORKS",
+            "program.results.title": "▲ LEARNING OUTCOMES",
+            "program.results.1": "✓ Able to conduct user research",
+            "program.results.2": "✓ Create user scenarios in Miro",
+            "program.results.3": "✓ Can create wireframes and prototypes",
+            "program.results.4": "✓ Understand graphic design principles",
+            "program.results.5": "✓ Create interface design in Figma",
+            "program.results.6": "✓ Create static web pages with HTML5/CSS3",
+            "program.results.7": "✓ Know the principles of responsive design",
+            "program.results.8": "✓ Can create interfaces for different devices",
+            "requirements.title": "📋 Requirements",
+            "requirements.1": "Confident PC user",
+            "requirements.2": "Preferably your own laptop (Windows/Mac, 8GB RAM, screen >13.3\")",
+            "requirements.3": "A laptop can be provided for the duration of the course if needed",
+            "methods.title": "🎯 Learning Methods",
+            "methods.1": "126 academic hours of classroom training",
+            "methods.2": "126 academic hours of self-study",
+            "methods.3": "Practical classes: 8 hours",
+            "methods.4": "Seminars: 8 hours",
+            "completion.title": "✅ Completion Conditions",
+            "completion.1": "Results are assessed based on practical work",
+            "completion.2": "To receive a certificate, you must pass 75% of homework assignments",
+            "completion.3": "If successful, the work is graded as 'pass'",
+            "teachers.title": "▲ TEACHERS",
+            "enroll.title": "▲ COURSE ENROLLMENT",
+            "enroll.dates_title": "Course dates:",
+            "enroll.price_title": "COURSE PRICE",
+            "enroll.price_note": "+ VAT",
+            "enroll.address": "📍 <strong>Address:</strong> Tartu mnt. 18, Tallinn",
+            "enroll.format": "👥 <strong>Format:</strong> In-person, groups of 6-10 people",
+            "enroll.language": "🗣️ <strong>Language:</strong> English",
+            "enroll.tech": "💻 <strong>Equipment:</strong> Laptop provided if needed",
+            "enroll.form_title": "APPLY FOR THE COURSE",
+            "enroll.form_name": "YOUR NAME",
+            "enroll.form_email": "EMAIL ADDRESS",
+            "enroll.form_phone": "PHONE",
+            "enroll.form_select": "SELECT GROUP",
+            "enroll.form_submit": "▲ SUBMIT APPLICATION",
+            "enroll.form_quality": "♦ QUALITY TRAINING GUARANTEED",
+            "footer.title": "GAMMA INTELLIGENCE TRAINING CENTRE",
+            "footer.contacts": "CONTACTS:",
+            "footer.address": "📍 Tartu mnt. 18, Tallinn, Estonia",
+            "footer.phone": "📞 +372 555 81 521",
+            "footer.email": "✉️ info@gammatest.net",
+            "footer.docs": "DOCUMENTS:",
+            "footer.company": "GAMMA INTELLIGENCE OÜ",
+            "footer.reg": "Reg. number: 11122396",
+            "footer.group": "Program group: 0613 - Software analysis and development",
+            "footer.copyright": "&copy; 2013-2025 Gamma Intelligence | For those who create beauty.",
+            "footer.questions": "Questions about the course? Write to: <a href=\"mailto:info@gammatest.net\" style=\"color: var(--pixel-yellow); text-decoration: none; font-family: 'Press Start 2P', monospace; font-size: 0.7rem;\">info@gammatest.net</a>",
+            "program.module2.title": "Basics of Figma",
+            "program.module2.hours": "12 hours",
+            "program.module2.desc": "Workspace and tools. Simple shapes. Vector tools. Basics of working with images. Masks. Document hierarchy. Basic text editing.",
+            "program.module3.title": "Landing Page Prototype",
+            "program.module3.hours": "16 hours",
+            "program.module3.desc": "Figma-based design basics. Composition in design. Typography and readability. Color theory in UI design, working with palettes. Grids, spacing, and layout.",
+            "program.module4.title": "HTML/CSS, Basics of Layout",
+            "program.module4.hours": "22 hours",
+            "program.module4.desc": "HTML5 standard. Main tags. Page rendering in browser. DOM model. Main web developer tools. IDE (Visual Studio Code). CSS CSS3.",
+            "program.module5.title": "UX Research. Miro/FigJam",
+            "program.module5.hours": "16 hours",
+            "program.module5.desc": "Product hypothesis and research. Creating a hypothesis. User and competitor research. Empathy map. Persona creation. Customer Journey Map.",
+            "program.module6.title": "UX Design",
+            "program.module6.hours": "16 hours",
+            "program.module6.desc": "Wireframing. User testing. Analysis of user tests. Grid iterations.",
+            "program.module7.title": "App Prototype Development",
+            "program.module7.hours": "32 hours",
+            "program.module7.desc": "Advanced Figma methods. Auto Layout. Creating components. Styles in Figma. Figma plugins. Clickable prototype. Usability testing.",
+            "program.module8.title": "Preparation for Development",
+            "program.module8.hours": "8 hours",
+            "program.module8.desc": "Creating adaptives. Developing a UI kit. Preparing a prototype for handoff to development.",
+            "teachers.dg.name": "Dmitri Gornakov",
+            "teachers.dg.role": "UX/UI Designer & Mentor",
+            "teachers.dg.experience": "over 7 years in graphic design",
+            "teachers.dg.specialization": "graphic design, interface design",
+            "teachers.dg.teaching": "over 10 years of experience",
+            "teachers.dg.education": "Estonian Music Academy (2008)",
+            "teachers.rk.name": "Roman Kutselepa",
+            "teachers.rk.role": "Frontend Developer & Educator",
+            "teachers.rk.experience": "over 5 years in software development",
+            "teachers.rk.specialization": "web design, JavaScript, efficient software use",
+            "teachers.rk.teaching": "over 5 years in staff training",
+            "teachers.rk.education": "Anglia Ruskin University (2010, UK)",
+            "teachers.experience": "Experience:",
+            "teachers.specialization": "Specialization:",
+            "teachers.teaching": "Teaching:",
+            "teachers.education": "Education:",
+            // ... остальные ключи ...
+          },
+          et: {
+            "header.reviews": "(89 arvustust)",
+            "header.join": "▲ LIITU KURSUSEGA",
+            "hero.title": "UX/UI Disain &<br>Prototüüpimine Figmas",
+            "hero.subtitle": "Intensiivne kursus kasutajaliideste loomiseks. Uuringutest kuni valmis tooteni 3 kuuga. <span class='highlight-text'>252 akadeemilist tundi</span> kvaliteetset õpet.",
+            "hero.badge": "✨ UUS KURSUS 2025",
+            "hero.status": "KURSUSE LAADIMINE...",
+            "hero.start": "KURSUSE ALGUS",
+            "hero.start_date": "30. juuni",
+            "hero.groups": "GRUPID",
+            "hero.groups_size": "6-10 INIMEST",
+            "hero.format": "FORMAAT",
+            "hero.format_type": "KOHAPEAL + PRAKTIKA",
+            "hero.hours": "ÕPPETUNDI",
+            "hero.modules": "MOODULIT",
+            "hero.practice": "PRAKTIKAT",
+            "program.title": "▲ KURSUSE PROGRAMM",
+            "program.module1.title": "Sissejuhatus UX/UI disaini",
+            "program.module1.hours": "4 tundi",
+            "program.module1.desc": "UX ja UI põhimõisted. Nende erinevus ja roll arendusprotsessis.",
+            "program.works.title": "▲ ÕPILASTE TÖÖD",
+            "program.results.title": "▲ ÕPITULEMUSED",
+            "program.results.1": "✓ Oskavad läbi viia kasutajauuringuid",
+            "program.results.2": "✓ Loovad kasutajastsenaariume Miro keskkonnas",
+            "program.results.3": "✓ Oskavad luua wireframe'e ja prototüüpe",
+            "program.results.4": "✓ Mõistavad graafilise disaini põhimõtteid",
+            "program.results.5": "✓ Loovad Figma-s liidese disaini",
+            "program.results.6": "✓ Loovad staatilisi veebilehti HTML5/CSS3 abil",
+            "program.results.7": "✓ Teavad responsiivse disaini põhimõtteid",
+            "program.results.8": "✓ Oskavad luua liideseid erinevatele seadmetele",
+            "requirements.title": "📋 Nõuded",
+            "requirements.1": "Kindel arvutikasutaja",
+            "requirements.2": "Soovitavalt isiklik sülearvuti (Windows/Mac, 8GB RAM, ekraan >13.3\")",
+            "requirements.3": "Vajadusel saab kursuse ajaks sülearvuti",
+            "methods.title": "🎯 Õppemeetodid",
+            "methods.1": "126 akadeemilist tundi auditoorset õpet",
+            "methods.2": "126 akadeemilist tundi iseseisvat tööd",
+            "methods.3": "Praktilised tunnid: 8 tundi",
+            "methods.4": "Seminarid: 8 tundi",
+            "completion.title": "✅ Lõpetamise tingimused",
+            "completion.1": "Tulemusi hinnatakse praktiliste tööde põhjal",
+            "completion.2": "Tunnistuse saamiseks tuleb sooritada 75% kodutöödest",
+            "completion.3": "Edukalt sooritatud töö hinnatakse 'arvestatud'",
+            "teachers.title": "▲ ÕPETAJAD",
+            "enroll.title": "▲ KURSUSELE REGISTREERIMINE",
+            "enroll.dates_title": "Kursuse toimumise aeg:",
+            "enroll.price_title": "KURSUSE HIND",
+            "enroll.price_note": "+ KM",
+            "enroll.address": "📍 <strong>Aadress:</strong> Tartu mnt. 18, Tallinn",
+            "enroll.format": "👥 <strong>Formaat:</strong> Kohapeal, grupid 6-10 inimest",
+            "enroll.language": "🗣️ <strong>Keel:</strong> Eesti",
+            "enroll.tech": "💻 <strong>Tehnika:</strong> Vajadusel saab sülearvuti",
+            "enroll.form_title": "REGISTREERU KURSUSELE",
+            "enroll.form_name": "TEIE NIMI",
+            "enroll.form_email": "EMAIL AADRESS",
+            "enroll.form_phone": "TELEFON",
+            "enroll.form_select": "VALI GRUPP",
+            "enroll.form_submit": "▲ SAADA AVALDUS",
+            "enroll.form_quality": "♦ KVALITEETNE ÕPE GARANTEERITUD",
+            "footer.title": "GAMMA INTELLIGENCE TRAINING CENTRE",
+            "footer.contacts": "KONTAKTID:",
+            "footer.address": "📍 Tartu mnt. 18, Tallinn, Estonia",
+            "footer.phone": "📞 +372 555 81 521",
+            "footer.email": "✉️ info@gammatest.net",
+            "footer.docs": "DOKUMENDID:",
+            "footer.company": "GAMMA INTELLIGENCE OÜ",
+            "footer.reg": "Reg. number: 11122396",
+            "footer.group": "Õppekavarühm: 0613 - Tarkvara analüüs ja arendus",
+            "footer.copyright": "&copy; 2013-2025 Gamma Intelligence | Neile, kes loovad ilu.",
+            "footer.questions": "Küsimused kursuse kohta? Kirjuta: <a href=\"mailto:info@gammatest.net\" style=\"color: var(--pixel-yellow); text-decoration: none; font-family: 'Press Start 2P', monospace; font-size: 0.7rem;\">info@gammatest.net</a>",
+            "program.module2.title": "Figma põhialused",
+            "program.module2.hours": "12 tundi",
+            "program.module2.desc": "Töökeskkond ja tööriistad. Lihtsad kujundid. Vektortööriistad. Piltidega töötamise alused. Maskid. Dokumendi hierarhia. Tekstiga töötamise põhitõed.",
+            "program.module3.title": "Landing Page prototüüp",
+            "program.module3.hours": "16 tundi",
+            "program.module3.desc": "Figma-põhine disain. Kompositsioon disainis. Tüpograafia ja loetavus. Värviteooria UI-disainis, palettidega töötamine. Võrgud, vahed ja paigutus.",
+            "program.module4.title": "HTML/CSS, paigutuse alused",
+            "program.module4.hours": "22 tundi",
+            "program.module4.desc": "HTML5 standard. Põhielemendid. Lehe kuvamine brauseris. DOM mudel. Peamised veebiarendaja tööriistad. IDE (Visual Studio Code). CSS CSS3.",
+            "program.module5.title": "UX-uuringud. Miro/FigJam",
+            "program.module5.hours": "16 tundi",
+            "program.module5.desc": "Toote hüpotees ja uuringud. Hüpoteesi loomine. Kasutaja- ja konkurentsiuuringud. Empaatiakaart. Persoonade loomine. Customer Journey Map.",
+            "program.module6.title": "UX disain",
+            "program.module6.hours": "16 tundi",
+            "program.module6.desc": "Wireframing. Kasutajatestid. Kasutajatestide analüüs. Võrkude iteratsioonid.",
+            "program.module7.title": "Rakenduse prototüübi loomine",
+            "program.module7.hours": "32 tundi",
+            "program.module7.desc": "Figma edasijõudnud meetodid. Auto Layout. Komponentide loomine. Stiilid Figmas. Figma pluginad. Klikitav prototüüp. Kasutatavuse testimine.",
+            "program.module8.title": "Arenduseks ettevalmistus",
+            "program.module8.hours": "8 tundi",
+            "program.module8.desc": "Adaptiivide loomine. UI-kiti loomine. Prototüübi ettevalmistamine arenduseks.",
+            "teachers.dg.name": "Dmitri Gornakov",
+            "teachers.dg.role": "UX/UI disainer & mentor",
+            "teachers.dg.experience": "üle 7 aasta graafilises disainis",
+            "teachers.dg.specialization": "graafiline disain, liideste disain",
+            "teachers.dg.teaching": "üle 10 aasta kogemust",
+            "teachers.dg.education": "Estonian Music Academy (2008)",
+            "teachers.rk.name": "Roman Kutselepa",
+            "teachers.rk.role": "Frontend arendaja & koolitaja",
+            "teachers.rk.experience": "üle 5 aasta tarkvaraarenduses",
+            "teachers.rk.specialization": "veebidisain, JavaScript, tarkvara tõhus kasutamine",
+            "teachers.rk.teaching": "üle 5 aasta personali koolitamist",
+            "teachers.rk.education": "Anglia Ruskin University (2010, Inglismaa)",
+            "teachers.experience": "Kogemus:",
+            "teachers.specialization": "Spetsialiseerumine:",
+            "teachers.teaching": "Õpetamine:",
+            "teachers.education": "Haridus:",
+            // ... остальные ключи ...
+          }
+        };
+
+        function setLanguage(lang) {
+          localStorage.setItem('lang', lang);
+          document.documentElement.lang = lang;
+          document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            el.innerHTML = translations[lang][key] || key;
+          });
+          // placeholders
+          document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            el.placeholder = translations[lang][key] || key;
+          });
+          // select options
+          document.querySelectorAll('[data-i18n-select]').forEach(el => {
+            const key = el.getAttribute('data-i18n-select');
+            const options = el.querySelectorAll('option');
+            if (options.length > 0) {
+              options[0].textContent = translations[lang][key] || key;
+            }
+          });
+        }
+
+        // Автоматический выбор языка при загрузке
+        (function() {
+          const savedLang = localStorage.getItem('lang');
+          const browserLang = (navigator.language || navigator.userLanguage || 'en').slice(0,2);
+          const lang = savedLang || (['ru','en','et'].includes(browserLang) ? browserLang : 'en');
+          setLanguage(lang);
+        })();
     </script>
 </body>
 </html> 

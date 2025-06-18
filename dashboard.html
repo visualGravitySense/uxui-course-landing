@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎓 UX/UI Курс - Центр управления</title>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -402,6 +406,88 @@
             color: #666;
             font-size: 1.1rem;
         }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .student-detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .student-detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .detail-value {
+            color: #666;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
+        }
     </style>
 </head>
 <body>
@@ -415,7 +501,7 @@
             </div>
 
             <div class="stats-card">
-                <div class="stats-number">23</div>
+                <div class="stats-number" id="sidebarStudentCount">-</div>
                 <div class="stats-label">Студентов</div>
             </div>
 
@@ -473,13 +559,13 @@
                     <div class="metric-card fade-in">
                         <div class="metric-header">
                             <div class="metric-info">
-                                <h3 style="color: #667eea;">23</h3>
+                                <h3 style="color: #667eea;" id="totalStudents">-</h3>
                                 <p>Всего студентов</p>
                             </div>
                             <div class="metric-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">👥</div>
                         </div>
                         <div class="metric-change">
-                            <span class="change-badge positive">+18%</span>
+                            <span class="change-badge positive" id="studentsGrowth">-</span>
                             <span style="color: #666; font-size: 0.9rem;">vs прошлый месяц</span>
                         </div>
                     </div>
@@ -487,13 +573,13 @@
                     <div class="metric-card fade-in">
                         <div class="metric-header">
                             <div class="metric-info">
-                                <h3 style="color: #4CAF50;">€4,016</h3>
+                                <h3 style="color: #4CAF50;" id="totalRevenue">€-</h3>
                                 <p>Общий доход</p>
                             </div>
                             <div class="metric-icon" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);">💰</div>
                         </div>
                         <div class="metric-change">
-                            <span class="change-badge positive">+24%</span>
+                            <span class="change-badge positive" id="revenueGrowth">-</span>
                             <span style="color: #666; font-size: 0.9rem;">vs прошлый месяц</span>
                         </div>
                     </div>
@@ -544,33 +630,12 @@
 
                 <div class="content-area">
                     <h2>📊 Последняя активность</h2>
-                    <ul class="activity-list">
+                    <ul class="activity-list" id="recentActivity">
                         <li class="activity-item">
-                            <div class="activity-icon">👤</div>
+                            <div class="activity-icon">📊</div>
                             <div class="activity-content">
-                                <div class="activity-title">Новая запись на курс</div>
-                                <div class="activity-time">Александр П. записался 2 часа назад</div>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon">💰</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Получен платеж</div>
-                                <div class="activity-time">€199 от Марии С. 4 часа назад</div>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon">📢</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Опубликован пост</div>
-                                <div class="activity-time">Telegram канал 6 часов назад</div>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon">📈</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Цель достигнута</div>
-                                <div class="activity-time">20 записей в этом месяце</div>
+                                <div class="activity-title">Загружаем активность...</div>
+                                <div class="activity-time">Подключение к базе данных</div>
                             </div>
                         </li>
                     </ul>
@@ -609,47 +674,39 @@
                     <h2>👥 Управление студентами</h2>
                     <div class="cards-grid" style="margin-bottom: 2rem;">
                         <div class="metric-card">
-                            <h3>23</h3>
+                            <h3 id="studentsTotal">-</h3>
                             <p>Всего студентов</p>
                         </div>
                         <div class="metric-card">
-                            <h3>18</h3>
-                            <p>Активных</p>
+                            <h3 id="studentsActive">-</h3>
+                            <p>Новых лидов</p>
                         </div>
                         <div class="metric-card">
-                            <h3>3</h3>
-                            <p>Ожидают оплаты</p>
+                            <h3 id="studentsContacted">-</h3>
+                            <p>Связались</p>
                         </div>
                         <div class="metric-card">
-                            <h3>2</h3>
-                            <p>Завершили курс</p>
+                            <h3 id="studentsEnrolled">-</h3>
+                            <p>Зачислено</p>
                         </div>
                     </div>
                     
                     <h3>Последние записи</h3>
-                    <ul class="activity-list">
-                        <li class="activity-item">
-                            <div class="activity-icon">👤</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Александр Петров</div>
-                                <div class="activity-time">Записался 15.01.2025 • Оплачено ✅</div>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon">👤</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Мария Сидорова</div>
-                                <div class="activity-time">Записалась 16.01.2025 • Ожидает оплаты ⏳</div>
-                            </div>
-                        </li>
-                        <li class="activity-item">
-                            <div class="activity-icon">👤</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Дмитрий Иванов</div>
-                                <div class="activity-time">Записался 14.01.2025 • Оплачено ✅</div>
-                            </div>
-                        </li>
-                    </ul>
+                    <div id="studentsTableContainer">
+                        <ul class="activity-list" id="studentsList">
+                            <li class="activity-item">
+                                <div class="activity-icon">📊</div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Загружаем данные...</div>
+                                    <div class="activity-time">Подключение к базе данных</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <button class="action-btn" onclick="exportStudents()" style="margin-top: 1rem;">
+                        📥 Экспорт в CSV
+                    </button>
                 </div>
             </div>
 
@@ -875,7 +932,45 @@
         </div>
     </div>
 
+    <!-- Student Detail Modal -->
+    <div class="modal" id="studentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Детали студента</h3>
+                <button class="modal-close" onclick="closeStudentModal()">&times;</button>
+            </div>
+            <div id="studentDetails">
+                <!-- Student details will be populated here -->
+            </div>
+        </div>
+    </div>
+
     <script>
+        // 🔥 Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8pbUwiBvT-H4sVkDya6kVQZl8b1eve08",
+            authDomain: "uxui-course-landing.firebaseapp.com",
+            projectId: "uxui-course-landing",
+            storageBucket: "uxui-course-landing.firebasestorage.app",
+            messagingSenderId: "333543552813",
+            appId: "1:333543552813:web:d859729de86722d6eb05a4",
+            measurementId: "G-FLEVDJY8YQ"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.firestore();
+
+        // Global variables for analytics
+        let studentsData = [];
+        let analyticsCache = {
+            totalStudents: 0,
+            totalRevenue: 0,
+            recentActivity: []
+        };
+
         // Navigation functionality
         function switchTab(tabName) {
             // Remove active class from all nav items
@@ -893,6 +988,235 @@
             
             // Show selected content section
             document.getElementById(tabName).classList.add('active');
+            
+            // Load data when switching to students tab
+            if (tabName === 'students') {
+                loadStudentsData();
+            }
+        }
+
+        // 🎓 Load and display students data
+        async function loadStudentsData() {
+            try {
+                console.log('🔄 Загружаем данные студентов...');
+                
+                const studentsSnapshot = await db.collection('students')
+                    .orderBy('timestamp', 'desc')
+                    .get();
+                
+                studentsData = [];
+                studentsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    studentsData.push({
+                        id: doc.id,
+                        ...data,
+                        timestamp: data.timestamp ? data.timestamp.toDate() : new Date()
+                    });
+                });
+                
+                console.log(`✅ Загружено ${studentsData.length} студентов`);
+                
+                // Update UI
+                displayStudents();
+                updateAnalytics();
+                updateRecentActivity();
+                
+            } catch (error) {
+                console.error('❌ Ошибка загрузки студентов:', error);
+                displayError('Ошибка загрузки данных студентов');
+            }
+        }
+
+        // 📊 Display students in the list
+        function displayStudents() {
+            const studentsList = document.getElementById('studentsList');
+            
+            if (studentsData.length === 0) {
+                studentsList.innerHTML = `
+                    <li class="activity-item">
+                        <div class="activity-icon">📭</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Пока нет записей</div>
+                            <div class="activity-time">Записи на курс будут отображаться здесь</div>
+                        </div>
+                    </li>
+                `;
+                return;
+            }
+            
+            studentsList.innerHTML = studentsData.map(student => {
+                const date = formatDate(student.timestamp);
+                const statusIcon = getStatusIcon(student.status);
+                const price = student.price ? `€${student.price}` : '€2008.19';
+                
+                return `
+                    <li class="activity-item" style="border-left: 4px solid ${getStatusColor(student.status)}; cursor: pointer;" 
+                        onclick="showStudentDetails('${student.id}')">
+                        <div class="activity-icon" style="background: ${getStatusColor(student.status)};">👤</div>
+                        <div class="activity-content">
+                            <div class="activity-title">${student.name || 'Без имени'}</div>
+                            <div class="activity-time">
+                                📧 ${student.email || 'email не указан'} • 
+                                📞 ${student.phone || 'телефон не указан'}<br>
+                                📚 ${student.course || 'курс не выбран'} • 
+                                💰 ${price} • 
+                                ${statusIcon} ${getStatusText(student.status)}<br>
+                                🕒 ${date} • 🌐 ${student.source || 'unknown'}
+                            </div>
+                        </div>
+                        <div style="margin-left: auto; display: flex; gap: 0.5rem;" onclick="event.stopPropagation();">
+                            <button onclick="updateStudentStatus('${student.id}', 'contacted')" 
+                                    style="padding: 0.3rem 0.8rem; background: #4CAF50; color: white; border: none; border-radius: 4px; font-size: 0.7rem; cursor: pointer;">
+                                ✅ Связались
+                            </button>
+                            <button onclick="updateStudentStatus('${student.id}', 'enrolled')" 
+                                    style="padding: 0.3rem 0.8rem; background: #2196F3; color: white; border: none; border-radius: 4px; font-size: 0.7rem; cursor: pointer;">
+                                🎓 Зачислен
+                            </button>
+                            <button onclick="showStudentDetails('${student.id}')" 
+                                    style="padding: 0.3rem 0.8rem; background: #667eea; color: white; border: none; border-radius: 4px; font-size: 0.7rem; cursor: pointer;">
+                                👁️ Детали
+                            </button>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+        }
+
+        // 📈 Update analytics metrics
+        function updateAnalytics() {
+            const totalStudents = studentsData.length;
+            const totalRevenue = studentsData.reduce((sum, student) => {
+                return sum + (student.price || 2008.19);
+            }, 0);
+            
+            // Count students by status
+            const statusCounts = studentsData.reduce((counts, student) => {
+                const status = student.status || 'new_lead';
+                counts[status] = (counts[status] || 0) + 1;
+                return counts;
+            }, {});
+            
+            // Update main counters
+            document.getElementById('sidebarStudentCount').textContent = totalStudents;
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('totalRevenue').textContent = `€${totalRevenue.toLocaleString()}`;
+            
+            // Update students page counters
+            const studentsTotal = document.getElementById('studentsTotal');
+            const studentsActive = document.getElementById('studentsActive');
+            const studentsContacted = document.getElementById('studentsContacted');
+            const studentsEnrolled = document.getElementById('studentsEnrolled');
+            
+            if (studentsTotal) studentsTotal.textContent = totalStudents;
+            if (studentsActive) studentsActive.textContent = statusCounts.new_lead || 0;
+            if (studentsContacted) studentsContacted.textContent = statusCounts.contacted || 0;
+            if (studentsEnrolled) studentsEnrolled.textContent = statusCounts.enrolled || 0;
+            
+            // Calculate growth (mock data for now)
+            const growth = Math.floor(Math.random() * 30) + 10;
+            document.getElementById('studentsGrowth').textContent = `+${growth}%`;
+            document.getElementById('revenueGrowth').textContent = `+${Math.floor(growth * 1.2)}%`;
+            
+            // Update cache
+            analyticsCache.totalStudents = totalStudents;
+            analyticsCache.totalRevenue = totalRevenue;
+            analyticsCache.statusCounts = statusCounts;
+            
+            console.log('📊 Аналитика обновлена:', {
+                totalStudents,
+                totalRevenue,
+                statusCounts
+            });
+        }
+
+        // 🕒 Update recent activity
+        function updateRecentActivity() {
+            const recentActivity = document.getElementById('recentActivity');
+            const recentStudents = studentsData.slice(0, 5);
+            
+            if (recentStudents.length === 0) {
+                recentActivity.innerHTML = `
+                    <li class="activity-item">
+                        <div class="activity-icon">📭</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Нет активности</div>
+                            <div class="activity-time">Активность появится после первых записей</div>
+                        </div>
+                    </li>
+                `;
+                return;
+            }
+            
+            recentActivity.innerHTML = recentStudents.map(student => {
+                const timeAgo = getTimeAgo(student.timestamp);
+                return `
+                    <li class="activity-item">
+                        <div class="activity-icon">👤</div>
+                        <div class="activity-content">
+                            <div class="activity-title">Новая запись на курс</div>
+                            <div class="activity-time">${student.name} записался ${timeAgo}</div>
+                        </div>
+                    </li>
+                `;
+            }).join('');
+        }
+
+        // 🔄 Update student status
+        async function updateStudentStatus(studentId, newStatus) {
+            try {
+                await db.collection('students').doc(studentId).update({
+                    status: newStatus,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log(`✅ Статус студента ${studentId} обновлен на ${newStatus}`);
+                
+                // Reload data
+                await loadStudentsData();
+                
+                // Show notification
+                showNotification(`Статус студента обновлен!`, 'success');
+                
+            } catch (error) {
+                console.error('❌ Ошибка обновления статуса:', error);
+                showNotification('Ошибка обновления статуса', 'error');
+            }
+        }
+
+        // 📥 Export students to CSV
+        function exportStudents() {
+            if (studentsData.length === 0) {
+                showNotification('Нет данных для экспорта', 'error');
+                return;
+            }
+            
+            const headers = ['Имя', 'Email', 'Телефон', 'Курс', 'Цена', 'Статус', 'Дата записи', 'Источник'];
+            const csvContent = [
+                headers.join(','),
+                ...studentsData.map(student => [
+                    `"${student.name || ''}"`,
+                    `"${student.email || ''}"`,
+                    `"${student.phone || ''}"`,
+                    `"${student.course || ''}"`,
+                    student.price || 2008.19,
+                    `"${getStatusText(student.status)}"`,
+                    `"${formatDate(student.timestamp)}"`,
+                    `"${student.source || 'unknown'}"`
+                ].join(','))
+            ].join('\n');
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `students_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification(`Экспортировано ${studentsData.length} записей`, 'success');
         }
 
         // Mobile sidebar toggle
@@ -900,23 +1224,269 @@
             document.getElementById('sidebar').classList.toggle('open');
         }
 
-        // Simulate real-time updates
-        function updateStats() {
-            const stats = [
-                { id: 'students', min: 20, max: 30 },
-                { id: 'revenue', min: 3500, max: 5000 },
-                { id: 'conversion', min: 12, max: 18 },
-                { id: 'visitors', min: 1000, max: 1500 }
-            ];
+        // 🎨 Helper functions for student status
+        function getStatusColor(status) {
+            switch(status) {
+                case 'new_lead': return '#FF9800';
+                case 'contacted': return '#4CAF50';
+                case 'enrolled': return '#2196F3';
+                case 'completed': return '#9C27B0';
+                default: return '#666';
+            }
+        }
+
+        function getStatusIcon(status) {
+            switch(status) {
+                case 'new_lead': return '🆕';
+                case 'contacted': return '☎️';
+                case 'enrolled': return '🎓';
+                case 'completed': return '✅';
+                default: return '❓';
+            }
+        }
+
+        function getStatusText(status) {
+            switch(status) {
+                case 'new_lead': return 'Новый лид';
+                case 'contacted': return 'Связались';
+                case 'enrolled': return 'Зачислен';
+                case 'completed': return 'Завершил курс';
+                default: return 'Неизвестно';
+            }
+        }
+
+        // 📅 Format date helpers
+        function formatDate(date) {
+            if (!date) return 'Дата неизвестна';
+            return new Intl.DateTimeFormat('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }).format(date);
+        }
+
+        function getTimeAgo(date) {
+            if (!date) return 'неизвестно когда';
             
-            stats.forEach(stat => {
-                const value = Math.floor(Math.random() * (stat.max - stat.min) + stat.min);
-                // Update values in real elements if needed
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            
+            if (diffMins < 60) return `${diffMins} мин назад`;
+            if (diffHours < 24) return `${diffHours} ч назад`;
+            return `${diffDays} дн назад`;
+        }
+
+        // 🚨 Error handling
+        function displayError(message) {
+            const studentsList = document.getElementById('studentsList');
+            studentsList.innerHTML = `
+                <li class="activity-item">
+                    <div class="activity-icon" style="background: #f44336;">❌</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Ошибка загрузки</div>
+                        <div class="activity-time">${message}</div>
+                    </div>
+                </li>
+            `;
+        }
+
+        // 📢 Notification system
+        function showNotification(message, type = 'success') {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notif => notif.remove());
+            
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            // Add notification styles if not exists
+            if (!document.getElementById('notificationStyles')) {
+                const style = document.createElement('style');
+                style.id = 'notificationStyles';
+                style.textContent = `
+                    .notification {
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        padding: 1rem 1.5rem;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        z-index: 10000;
+                        opacity: 0;
+                        transform: translateX(100%);
+                        transition: all 0.3s ease;
+                        max-width: 300px;
+                    }
+                    
+                    .notification.success {
+                        background: #4CAF50;
+                        color: white;
+                    }
+                    
+                    .notification.error {
+                        background: #f44336;
+                        color: white;
+                    }
+                    
+                    .notification.show {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // 👁️ Show student details modal
+        function showStudentDetails(studentId) {
+            const student = studentsData.find(s => s.id === studentId);
+            if (!student) {
+                showNotification('Студент не найден', 'error');
+                return;
+            }
+            
+            const modal = document.getElementById('studentModal');
+            const detailsContainer = document.getElementById('studentDetails');
+            
+            detailsContainer.innerHTML = `
+                <div class="student-detail-item">
+                    <span class="detail-label">👤 Имя:</span>
+                    <span class="detail-value">${student.name || 'Не указано'}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">📧 Email:</span>
+                    <span class="detail-value">${student.email || 'Не указан'}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">📞 Телефон:</span>
+                    <span class="detail-value">${student.phone || 'Не указан'}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">📚 Курс:</span>
+                    <span class="detail-value">${student.course || 'Не выбран'}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">💰 Цена:</span>
+                    <span class="detail-value">€${student.price || '2008.19'}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">${getStatusIcon(student.status)} Статус:</span>
+                    <span class="detail-value" style="color: ${getStatusColor(student.status)}; font-weight: 600;">
+                        ${getStatusText(student.status)}
+                    </span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">🕒 Дата записи:</span>
+                    <span class="detail-value">${formatDate(student.timestamp)}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">🌐 Источник:</span>
+                    <span class="detail-value">${student.source || 'unknown'}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">🔧 User Agent:</span>
+                    <span class="detail-value" style="font-size: 0.8rem;">${student.userAgent || 'Неизвестно'}</span>
+                </div>
+                <div class="student-detail-item">
+                    <span class="detail-label">📝 ID в базе:</span>
+                    <span class="detail-value" style="font-family: monospace; font-size: 0.8rem;">${student.id}</span>
+                </div>
+                
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button onclick="updateStudentStatus('${student.id}', 'contacted'); closeStudentModal();" 
+                            style="flex: 1; padding: 0.8rem; background: #4CAF50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                        ✅ Отметить как связались
+                    </button>
+                    <button onclick="updateStudentStatus('${student.id}', 'enrolled'); closeStudentModal();" 
+                            style="flex: 1; padding: 0.8rem; background: #2196F3; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                        🎓 Зачислить на курс
+                    </button>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <button onclick="copyToClipboard('${student.email}', 'Email скопирован!')" 
+                            style="width: 100%; padding: 0.8rem; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                        📋 Скопировать email
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+        }
+
+        // ❌ Close student details modal
+        function closeStudentModal() {
+            const modal = document.getElementById('studentModal');
+            modal.classList.remove('show');
+        }
+
+        // 📋 Copy to clipboard function
+        function copyToClipboard(text, message) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(message, 'success');
+            }).catch(() => {
+                showNotification('Ошибка копирования', 'error');
             });
         }
 
-        // Add some interactivity
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('studentModal');
+            if (event.target === modal) {
+                closeStudentModal();
+            }
+        });
+
+        // Simulate real-time updates
+        function updateStats() {
+            // This function now handled by Firebase real-time data
+            loadStudentsData();
+        }
+
+        // 🚀 Initialize dashboard when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎓 Инициализация dashboard...');
+            
+            // Load students data immediately
+            loadStudentsData();
+            
+            // Set up real-time listener for new students
+            db.collection('students')
+                .orderBy('timestamp', 'desc')
+                .onSnapshot((snapshot) => {
+                    console.log('🔄 Получено обновление данных студентов');
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'added') {
+                            console.log('✨ Новый студент:', change.doc.data());
+                            // Reload data to update all counters
+                            setTimeout(() => loadStudentsData(), 1000);
+                        }
+                    });
+                }, (error) => {
+                    console.error('❌ Ошибка real-time listener:', error);
+                });
+            
             // Add click animations to cards
             document.querySelectorAll('.metric-card').forEach(card => {
                 card.addEventListener('click', function() {
@@ -942,6 +1512,8 @@
 
             // Update stats every 30 seconds
             setInterval(updateStats, 30000);
+            
+            console.log('✅ Dashboard инициализирован');
         });
 
         // Add mobile menu button
